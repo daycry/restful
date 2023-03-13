@@ -1,0 +1,78 @@
+{
+    "name": "daycry/restfull",
+    "description": "Rest Server for Codeigniter 4",
+    "homepage": "https://github.com/daycry/restfull",
+    "authors":
+    [
+        {
+            "name": "daycry",
+            "homepage": "https://github.com/daycry",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "require": {
+      "php": ">=7.4 || ^8.0",
+        "daycry/encryption": "^2.0",
+        "daycry/jwt": "^1.0",
+        "daycry/class-finder": "^2.0",
+        "daycry/cronjob": "^2.0"
+    },
+    "require-dev":
+    {
+        "codeigniter4/devkit": "^1",
+        "codeigniter4/framework": "^4",
+        "mikey179/vfsstream": "^1",
+        "mockery/mockery": "^1"
+    },
+    "autoload":
+    {
+        "psr-4": {
+            "Daycry\\RestFull\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "**/Database/Migrations/**"
+        ]
+    },
+    "autoload-dev":
+    {
+        "psr-4":
+        {
+            "Tests\\": "tests/",
+            "Tests\\Support\\": "tests/_support"
+        }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "bash admin/setup.sh"
+        ],
+        "analyze": [
+            "phpstan analyze",
+            "psalm",
+            "rector process --dry-run"
+        ],
+        "sa": "@analyze",
+        "ci": [
+            "Composer\\Config::disableProcessTimeout",
+            "@cs",
+            "@deduplicate",
+            "@inspect",
+            "@analyze",
+            "@test"
+        ],
+        "cs": "php-cs-fixer fix --ansi --verbose --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix --ansi --verbose --diff",
+        "deduplicate": "phpcpd app/ src/ --exclude src/Database/Migrations/2020-12-28-223112_create_auth_tables.php",
+        "inspect": "deptrac analyze --cache-file=build/deptrac.cache",
+        "mutate": "infection --threads=2 --skip-initial-tests --coverage=build/phpunit",
+        "style": "@cs-fix",
+        "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    }
+}
