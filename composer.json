@@ -1,5 +1,5 @@
 {
-    "name": "daycry/restfull",
+    "name": "daycry/restful",
     "description": "Rest Server for Codeigniter 4",
     "homepage": "https://github.com/daycry/restfull",
     "authors":
@@ -18,7 +18,8 @@
         "daycry/encryption": "^2.0",
         "daycry/jwt": "^1.0",
         "daycry/class-finder": "^2.0",
-        "daycry/cronjob": "^2.0"
+        "daycry/cronjob": "^2.0",
+        "codeigniter4/settings": "^2.1"
     },
     "require-dev":
     {
@@ -30,7 +31,7 @@
     "autoload":
     {
         "psr-4": {
-            "Daycry\\RestFull\\": "src/"
+            "Daycry\\RestFul\\": "src/"
         },
         "exclude-from-classmap": [
             "**/Database/Migrations/**"
@@ -62,13 +63,19 @@
             "@analyze",
             "@test"
         ],
-        "cs": "php-cs-fixer fix --ansi --verbose --dry-run --diff",
-        "cs-fix": "php-cs-fixer fix --ansi --verbose --diff",
-        "deduplicate": "phpcpd app/ src/ --exclude src/Database/Migrations/2020-12-28-223112_create_auth_tables.php",
+        "cs": [
+            "php-cs-fixer fix src --ansi --verbose --dry-run --diff",
+            "php-cs-fixer fix tests --ansi --verbose --dry-run --diff"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix src --ansi --verbose --diff",
+            "php-cs-fixer fix tests --ansi --verbose --diff"
+        ],
+        "deduplicate": "phpcpd app/ src/ --exclude src/Database/Migrations/2023-03-13-000001_create_core_tables.php",
         "inspect": "deptrac analyze --cache-file=build/deptrac.cache",
         "mutate": "infection --threads=2 --skip-initial-tests --coverage=build/phpunit",
         "style": "@cs-fix",
-        "test": "phpunit"
+        "test": "vendor/bin/phpunit"
     },
     "config": {
         "allow-plugins": {
