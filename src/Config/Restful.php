@@ -293,6 +293,17 @@ class RestFul extends BaseConfig
 
     /**
      *--------------------------------------------------------------------------
+     * REST Logs
+     * --------------------------------------------------------------------------
+     * When set to TRUE, the REST API will check the access table to see if
+     * the User can access that controller.
+     */
+    public bool $enableLogs = true;
+    public bool $logParamsJson = true;
+    public bool $logParamsEncrypt = false;
+
+    /**
+     *--------------------------------------------------------------------------
      * REST Method Limit Control
      * --------------------------------------------------------------------------
      * When set to TRUE, the REST API will count the number of uses of each method

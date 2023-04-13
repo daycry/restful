@@ -105,7 +105,6 @@ class CreateCoreTables extends Migration
             'params'                => ['type' => 'text', 'null' => true],
             'ip_address'            => ['type' => 'varchar', 'constraint' => 45, 'null' => false],
             'duration'              => ['type' => 'float', 'null' => true, 'default' => null],
-            'authorized'            => ['type' => 'tinyint', 'constraint' => 1, 'null' => false],
             'response_code'         => ['type' => 'int', 'constraint' => 3, 'null' => true],
             'created_at'            => ['type' => 'datetime', 'null' => false, 'default' => new RawSql('CURRENT_TIMESTAMP')],
             'updated_at'            => ['type' => 'datetime', 'null' => true, 'default' => null ],
