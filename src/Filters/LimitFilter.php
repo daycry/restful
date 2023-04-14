@@ -62,7 +62,6 @@ class LimitFilter implements FilterInterface
                     $limitModel = new \Daycry\RestFul\Models\LimitModel();
                     $result = $limitModel->where('uri', $limited_uri)->first();
 
-                    log_message('critical', 'limitttt: ' . $limit);
                     // No calls have been made for this key
                     if ($result === null) {
                         $limitEntity = new \Daycry\RestFul\Entities\Limit();

@@ -39,8 +39,6 @@ final class BasicTest extends FilterTestCase
 
     public function testAuthBasicWithoutCredentials(): void
     {
-        $request = service('request');
-
         $this->inkectMockAttributes(['defaultAuth' => 'basic']);
 
         $result = $this->call('get', 'example');

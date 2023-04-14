@@ -9,6 +9,7 @@ use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Interfaces\AuthenticatorInterface;
 use Daycry\RestFul\Entities\User;
 use Daycry\RestFul\Models\UserModel;
+use Daycry\RestFul\Exceptions\BaseException;
 
 /**
  * @method Result    attempt(array $credentials)
@@ -24,6 +25,11 @@ use Daycry\RestFul\Models\UserModel;
  */
 class Auth
 {
+    /**
+     * The current version
+     */
+    public const RESTFUL_VERSION = '1.0.0';
+
     protected Authentication $authenticate;
 
     /**
@@ -110,5 +116,28 @@ class Auth
         $this->userProvider = new $className();
 
         return $this->userProvider;
+    }
+
+    /**
+     * Provide magic function-access to Authenticators to save use
+     * from repeating code here, and to allow them have their
+     * own, additional, features on top of the required ones,
+     * like "remember-me" functionality.
+     *
+     * @param string[] $args
+     *
+     * @throws AuthenticationException
+     */
+    public function __call(string $method, array $args)
+    {
+        try {
+            $authenticate = $this->getAuthenticator();
+
+            if (method_exists($authenticate, $method)) {
+                return $authenticate->{$method}(...$args);
+            }
+        } catch(BaseException $ex) {
+            return false;
+        }
     }
 }

@@ -35,7 +35,7 @@ class AccessTokenFilter implements FilterInterface
 
         if ($accessTokenEnabled) {
 
-            $actualAuth = (auth($alias)->id()) ? auth()->user() : null;
+            $actualAuth = (auth()->loggedIn()) ? auth()->user() : null;
 
             try {
                 auth('token')->authenticate();

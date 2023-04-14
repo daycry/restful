@@ -18,6 +18,8 @@ parameters:
 		- '#Call to deprecated method request\(\)#'
 		- '#Cannot access property#'
 		- '#Expression on left side of ?? is not nullable#'
+		- '#Call to deprecated method getMethod\(\) of class CodeIgniter\\HTTP\\Request:#'
+		- '#Call to deprecated method getStatusCode\(\) of class CodeIgniter\\HTTP\\ResponseInterface:#'
 	universalObjectCratesClasses:
 		- CodeIgniter\Entity
 		- CodeIgniter\Entity\Entity

@@ -22,10 +22,9 @@ Events::on('post_system', static function () {
         $benchmark = Services::timer();
         $response = Services::response();
 
-        try {
+        $userId = null;
+        if(auth()->loggedIn()) {
             $userId = auth()->id();
-        } catch(BaseException $ex) {
-            $userId = null;
         }
 
         $benchmark->stop('restful');
