@@ -313,8 +313,9 @@ class RestFul extends BaseConfig
     * This feature use Daycry\CronJob vendor
     * for more information: https://github.com/daycry/cronjob
     *
+    * Ex: $namespaceScope = ['\Api\Controllers\Class', '\App\Controllers\Class'];
     */
-    public $namespaceScope = ['\Daycry\JWT'];
+    public $namespaceScope = [];
 
     /**
      *--------------------------------------------------------------------------

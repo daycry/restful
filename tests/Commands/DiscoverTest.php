@@ -38,6 +38,8 @@ final class DiscoverTest extends TestCase
 
     public function testDiscover(): void
     {
+        $this->inkectMockAttributes(['namespaceScope' => ['\Daycry\JWT']]);
+
         command('restful:discover');
         $this->assertStringContainsString('**** FINISHED. ****', CITestStreamFilter::$buffer);
     }
