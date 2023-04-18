@@ -14,7 +14,7 @@ if (! function_exists('validation')) {
      * @param Validation|null $config
      * @param bool $getShared
      * @param bool $filter
-     * 
+     *
      * @throws ValidationException
      */
     function validation(array $data, string $rules, ?Validation $config = null, bool $getShared, bool $filter = false): void
