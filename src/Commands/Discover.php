@@ -70,10 +70,10 @@ class Discover extends BaseCommand
         CLI::write('**** FINISHED. ****', 'white', 'green');
     }
 
-    private function _checkApiModel(): ?Api
+    private function _checkApiModel(): Api
     {
         $apiModel = new ApiModel();
-
+        /** @var ?Api $api */
         $api = $apiModel->where('url', site_url())->first();
 
         if (!$api) {
@@ -115,9 +115,10 @@ class Discover extends BaseCommand
             $controller->id = $controllerModel->getInsertID();
         }
 
+        $endpointModel = new EndpointModel();
+
         $allMethods = (new EndpointModel())->where('controller_id', $controller->id)->findColumn('method');
         foreach($methods as $method) {
-            $endpointModel = new EndpointModel();
             $endpoint = $endpointModel->where('controller_id', $controller->id)->where('method', $method)->first();
 
             if(!$endpoint) {

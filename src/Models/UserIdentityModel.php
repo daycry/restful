@@ -7,6 +7,7 @@ namespace Daycry\RestFul\Models;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\ConnectionInterface;
 use Daycry\RestFul\Exceptions\LogicException;
+use Daycry\RestFul\Exceptions\DatabaseException;
 use Daycry\RestFul\Entities\UserIdentity;
 use Daycry\RestFul\Entities\User;
 use CodeIgniter\I18n\Time;

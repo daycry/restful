@@ -25,7 +25,7 @@ abstract class DatabaseTestCase extends TestCase
     {
         parent::setUp();
 
-        /** @var RestFul $authConfig */
+        /** @var RestFul $restFulConfig */
         $restFulConfig   = config('RestFul');
         $this->tables = $restFulConfig->tables;
     }

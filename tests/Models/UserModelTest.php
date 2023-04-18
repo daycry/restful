@@ -8,6 +8,7 @@ use Tests\Support\DatabaseTestCase;
 use Tests\Support\Database\Seeds\TestSeeder;
 use Tests\Support\FakeUser;
 use Daycry\RestFul\Models\UserModel;
+use Daycry\RestFul\Entities\User;
 use Daycry\RestFul\Entities\UserIdentity;
 
 /**
@@ -34,9 +35,10 @@ final class UserModelTest extends DatabaseTestCase
 
     public function testGetIdentitiesByType(): void
     {
-        $this->user = (model(UserModel::class))->find(1);
+        /** @var User $user */
+        $user = (model(UserModel::class))->find(1);
 
-        $identities = $this->user->getIdentities('token');
+        $identities = $user->getIdentities('token');
 
         $this->assertCount(1, $identities);
         $this->assertInstanceOf(UserIdentity::class, $identities[0]);
