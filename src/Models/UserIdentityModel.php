@@ -44,6 +44,22 @@ class UserIdentityModel extends BaseModel
     }
 
     /**
+     * Inserts a record
+     *
+     * @param array|object $data
+     *
+     * @throws DatabaseException
+     */
+    public function create($data): void
+    {
+        $this->disableDBDebug();
+
+        $return = $this->insert($data);
+
+        $this->checkQueryReturn($return);
+    }
+
+    /**
      * Returns all user identities.
      *
      * @return UserIdentity[]

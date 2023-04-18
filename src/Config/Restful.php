@@ -303,6 +303,20 @@ class RestFul extends BaseConfig
     public bool $logParamsEncrypt = false;
 
     /**
+    *--------------------------------------------------------------------------
+    * Cronjob
+    *--------------------------------------------------------------------------
+    *
+    * Set to TRUE to enable Cronjob for fill the table petitions with your API classes
+    * $restNamespaceScope \Namespace\Class or \Namespace\Folder\Class or \Namespace example: \App\Controllers
+    *
+    * This feature use Daycry\CronJob vendor
+    * for more information: https://github.com/daycry/cronjob
+    *
+    */
+    public $namespaceScope = ['\Daycry\JWT'];
+
+    /**
      *--------------------------------------------------------------------------
      * REST Method Limit Control
      * --------------------------------------------------------------------------

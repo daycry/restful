@@ -86,6 +86,10 @@ class TestSeeder extends Seeder
             [
                 'controller'=> '\Tests\Support\Controllers\Example',
                 'api_id'    => 1,
+            ],
+            [
+                'controller'=> '\Daycry\JWT\JWT',
+                'api_id'    => 1,
             ]
         ];
 
@@ -95,6 +99,16 @@ class TestSeeder extends Seeder
         $endpoints = [
             [
                 'controller_id'  => 1,
+                'method'        => 'read',
+                'auth'          => null,
+                'access_token'  => null,
+                'log'           => null,
+                'limit'         => 10,
+                'time'          => 3600,
+                'scope'        => "users.read"
+            ],
+            [
+                'controller_id'  => 2,
                 'method'        => 'read',
                 'auth'          => null,
                 'access_token'  => null,

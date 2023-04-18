@@ -17,6 +17,8 @@ class CheckIpInRange
      * In order to simplify working with IP addresses (in binary) and their
      * netmasks, it is easier to ensure that the binary strings are padded
      * with zeros out to 32 characters - IP addresses are 32 bit numbers
+     *
+     * @codeCoverageIgnore
      */
     public static function decbin32($dec)
     {
@@ -90,6 +92,8 @@ class CheckIpInRange
      * $ip is the IPV6 address in decimal format to check if its within the IP range created by the cloudflare IPV6 address, $range_ip.
      * $ip and $range_ip are converted to full IPV6 format.
      * Returns true if the IPV6 address, $ip,  is within the range from $range_ip.  False otherwise.
+     *
+     * @codeCoverageIgnore
      */
     public static function ipv6_in_range($ip, $range_ip)
     {
@@ -140,6 +144,9 @@ class CheckIpInRange
         return $in_range;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private static function ip2long6($ip)
     {
         if (substr_count($ip, '::')) {
@@ -155,6 +162,9 @@ class CheckIpInRange
         return base_convert($r_ip, 2, 10);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     // Get the ipv6 full format and return it as a decimal value.
     public static function get_ipv6_full($ip)
     {

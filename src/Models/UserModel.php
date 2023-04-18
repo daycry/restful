@@ -28,18 +28,18 @@ class UserModel extends BaseModel
 
     protected $afterFind     = ['fetchIdentities'];
 
+    /**
+     * Whether identity records should be included
+     * when user records are fetched from the database.
+     */
+    protected bool $fetchIdentities = false;
+
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
         parent::__construct($db, $validation);
 
         $this->table = $this->tables['users'];
     }
-
-    /**
-     * Whether identity records should be included
-     * when user records are fetched from the database.
-     */
-    protected bool $fetchIdentities = false;
 
     /**
      * Mark the next find* query to include identities
@@ -86,7 +86,7 @@ class UserModel extends BaseModel
 
         $mappedUsers = $this->assignIdentities($data, $identities);
 
-        $data['data'] = $data['singleton'] ? $mappedUsers[$data['id']] : $mappedUsers;
+        $data['data'] = $data['singleton'] ? $mappedUsers[array_column($data, 'id')[0]] : $mappedUsers;
 
         return $data;
     }

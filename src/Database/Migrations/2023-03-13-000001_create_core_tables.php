@@ -63,7 +63,7 @@ class CreateCoreTables extends Migration
             'deleted_at'   => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey(['type', 'secret']);
+        $this->forge->addUniqueKey(['user_id','type', 'secret']);
         $this->forge->addKey('user_id');
         $this->forge->addForeignKey('user_id', $this->tables['users'], 'id', '', 'CASCADE');
         $this->forge->createTable($this->tables['identities']);

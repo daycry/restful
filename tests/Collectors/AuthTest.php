@@ -73,4 +73,20 @@ final class AuthTest extends TestCase
         $this->assertStringContainsString(RestFulAuth::RESTFUL_VERSION, $output);
         $this->assertStringContainsString(Basic::class, $output);
     }
+
+    public function testGetBadgeValueReturnsUserId(): void
+    {
+        $this->inkectMockAttributes(['defaultAuth' => 'basic']);
+
+        helper('auth');
+
+        $request = service('request');
+        $request->setHeader('Authorization', 'Basic ' . \base64_encode('daycry:password'));
+
+        auth()->authenticate();
+
+        $output = (string) $this->collector->getBadgeValue();
+
+        $this->assertStringContainsString('1', $output);
+    }
 }
