@@ -13,5 +13,6 @@ return [
     'noPassword'            => 'Cannot validate a user without a password.',
     'invalidLibraryImplementation' => 'Invalid library implementation',
     'notEnoughPrivilege'    => 'You do not have the necessary permission to perform the desired operation.',
-    'invalidObjectForCast' => 'Invalid Object for Casting'
+    'invalidObjectForCast' => 'Invalid Object for Casting',
+    'invalidParamsForMethod' => 'Invalid params for this method: \'{param}\'',
 ];
