@@ -56,7 +56,7 @@ class CreateCoreTables extends Migration
             'force_reset'  => ['type' => 'tinyint', 'constraint' => 1, 'default' => 0],
             'ignore_limits'=> ['type' => 'tinyint', 'constraint' => 1, 'null' => false, 'default' => 0],
             'is_private'   => ['type' => 'tinyint', 'constraint' => 1, 'null' => false, 'default' => 0],
-            'ip_addresses' => ['type' => 'text', 'null' => null],
+            'ip_addresses' => ['type' => 'text', 'null' => true, 'default' => null],
             'last_used_at' => ['type' => 'datetime', 'null' => true],
             'created_at'   => ['type' => 'datetime', 'null' => false, 'default' => new RawSql('CURRENT_TIMESTAMP')],
             'updated_at'   => ['type' => 'datetime', 'null' => true],

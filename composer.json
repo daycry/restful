@@ -19,7 +19,7 @@
         "daycry/jwt": "^1.0",
         "daycry/class-finder": "^2.0",
         "daycry/cronjob": "^2.0",
-        "codeigniter4/settings": "^2.1"
+        "daycry/settings": "^1"
     },
     "require-dev":
     {

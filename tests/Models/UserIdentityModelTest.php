@@ -7,7 +7,6 @@ namespace Tests\Models;
 use Tests\Support\DatabaseTestCase;
 use Tests\Support\Database\Seeds\TestSeeder;
 use Daycry\RestFul\Exceptions\DatabaseException;
-use Daycry\RestFul\Exceptions\ValidationException;
 use Daycry\RestFul\Exceptions\LogicException;
 use Daycry\RestFul\Models\UserIdentityModel;
 use Daycry\RestFul\Models\UserModel;
@@ -36,9 +35,8 @@ final class UserIdentityModelTest extends DatabaseTestCase
         // "type and secret" are unique.
         $model->create([
             'user_id' => 1,
-            'type'    => 'basic',
-            'secret'  => '123456',
-            'extra'   => ''
+            'type'    => 'token',
+            'secret'  => '887abf7e82c4a94d4945bbda0958ee58ffe9117f9b317d586fc4192680033593'
         ]);
     }
 

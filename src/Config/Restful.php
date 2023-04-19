@@ -65,6 +65,7 @@ class RestFul extends BaseConfig
      * 'bearer'     Bearer Token
      * 'session' Check for a PHP session variable. See 'authSource' to set the authorization key
      * 'whitelist' Check and IP Address for validate
+     * 'token' Api Token
      *
      * @var string
      */

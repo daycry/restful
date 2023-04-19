@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Daycry\RestFul\Models\AttemptModel;
 use CodeIgniter\Config\Services;
 use CodeIgniter\I18n\Time;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * Attempt Filter.
@@ -18,6 +19,8 @@ use CodeIgniter\I18n\Time;
  */
 class AttemptFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         $enableInvalidAttempts = service('settings')->get('RestFul.enableInvalidAttempts');
@@ -30,9 +33,8 @@ class AttemptFilter implements FilterInterface
             $attemptModel = new AttemptModel();
             $attempt = $attemptModel->where('ip_address', $request->getIPAddress())->first();
 
-            $date = Time::createFromFormat('Y-m-d H:i:s', $attempt->hour_started_at);
-
             if ($attempt && $attempt->attempts >= $maxAttempts) {
+                $date = Time::createFromFormat('Y-m-d H:i:s', $attempt->hour_started_at);
                 if ($date->getTimestamp() <= (time() - $timeBlocked)) {
                     $attemptModel->delete($attempt->id, true);
                 } else {

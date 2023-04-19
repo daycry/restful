@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
 use Daycry\RestFul\Exceptions\BaseException;
 use Daycry\RestFul\Entities\Endpoint;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * Ajax Filter.
@@ -18,6 +19,8 @@ use Daycry\RestFul\Entities\Endpoint;
  */
 class AccessTokenFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         helper(['checkEndpoint','checkIp','auth']);
@@ -41,6 +44,7 @@ class AccessTokenFilter implements FilterInterface
                 auth('token')->authenticate();
             } catch(BaseException $ex) {
                 if(!$actualAuth || auth('token')->id() != $actualAuth->id) {
+                    $this->registerAttempt();
                     if($strictApiAndAuth) {
                         return Services::response()->setStatusCode(403, lang('RestFul.invalidCredentials'));
                     } else {

@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
 use Daycry\RestFul\Exceptions\BaseException;
 use CodeIgniter\I18n\Time;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * Limit Filter.
@@ -18,6 +19,8 @@ use CodeIgniter\I18n\Time;
  */
 class LimitFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         helper(['checkEndpoint', 'auth']);
@@ -96,6 +99,7 @@ class LimitFilter implements FilterInterface
                     }
                 }
             } catch(BaseException $ex) {
+                $this->registerAttempt();
                 return Services::response()->setStatusCode($ex->getCode(), $ex->getMessage());
             }
         }

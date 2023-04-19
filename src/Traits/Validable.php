@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+namespace Daycry\RestFul\Traits;
+
 use Config\Validation;
 use Config\Services;
 use Daycry\RestFul\Exceptions\ValidationException;
 
-if (! function_exists('validation')) {
+trait Validable
+{
     /**
      * @param array $data
      * @param string $rules
@@ -16,7 +19,7 @@ if (! function_exists('validation')) {
      *
      * @throws ValidationException
      */
-    function validation(array $data, string $rules, bool $getShared, bool $filter = false, ?Validation $config = null): void
+    public function validation(array $data, string $rules, bool $getShared, bool $filter = false, ?Validation $config = null): void
     {
         $config ??= config('Validation');
 

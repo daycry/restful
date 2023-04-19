@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
 use Daycry\RestFul\Exceptions\BaseException;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * Access Filter.
@@ -17,6 +18,8 @@ use Daycry\RestFul\Exceptions\BaseException;
  */
 class AccessFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         helper(['checkEndpoint', 'auth']);
@@ -32,10 +35,12 @@ class AccessFilter implements FilterInterface
                 }
 
                 if(!$alias || !auth($alias)->user() || ($scope && !auth($alias)->user()->can($scope))) {
+                    $this->registerAttempt();
                     return Services::response()->setStatusCode(401, lang('RestFul.notEnoughPrivilege'));
                 }
 
             } catch(BaseException $ex) {
+                $this->registerAttempt();
                 return Services::response()->setStatusCode($ex->getCode(), $ex->getMessage());
             }
         }

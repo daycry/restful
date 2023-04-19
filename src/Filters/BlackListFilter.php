@@ -8,6 +8,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * BlackList Filter.
@@ -16,6 +17,8 @@ use CodeIgniter\Config\Services;
  */
 class BlackListFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         helper('checkIp');
@@ -25,6 +28,7 @@ class BlackListFilter implements FilterInterface
         if ($ipBlacklistEnabled) {
             $found = checkIp($request->getIPAddress(), service('settings')->get('RestFul.ipBlacklist'));
             if ($found) {
+                $this->registerAttempt();
                 return Services::response()->setStatusCode(401, lang('RestFul.ipDenied'));
             }
         }

@@ -24,9 +24,9 @@ class Registrar
         return [
             'aliases' => [
                 'chain'      => [
+                    AttemptFilter::class,
                     AjaxFilter::class,
                     CorsFilter::class,
-                    AttemptFilter::class,
                     BlackListFilter::class,
                     WhiteListFilter::class,
                     AuthFilter::class,

@@ -8,17 +8,18 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Daycry\RestFul\Exceptions\BaseException;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\Config\Services;
-use Daycry\RestFul\Exceptions\AuthenticationException;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
- * Ajax Filter.
+ * Auth Filter.
  *
  * @param array|null $arguments
  */
 class AuthFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         helper(['checkEndpoint', 'auth']);
@@ -36,6 +37,7 @@ class AuthFilter implements FilterInterface
             }
 
         } catch(BaseException $ex) {
+            $this->registerAttempt();
             return Services::response()->setStatusCode($ex->getCode(), $ex->getMessage());
         }
     }

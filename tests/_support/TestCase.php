@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Support;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Settings\Settings;
+use Daycry\Settings\Settings;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 

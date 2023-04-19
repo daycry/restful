@@ -5,7 +5,7 @@ namespace Daycry\RestFul\Config;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Config\Services;
 use Daycry\RestFul\Models\LogModel;
-use Daycry\RestFul\Exceptions\BaseException;
+use Daycry\RestFul\Models\AttemptModel;
 use Daycry\Encryption\Encryption;
 
 Events::on('pre_system', static function () {
@@ -17,15 +17,15 @@ Events::on('post_system', static function () {
 
     helper(['auth']);
 
+    $userId = null;
+    if(auth()->loggedIn()) {
+        $userId = auth()->id();
+    }
+
     if(service('settings')->get('RestFul.enableLogs')) {
         $request = Services::request();
         $benchmark = Services::timer();
         $response = Services::response();
-
-        $userId = null;
-        if(auth()->loggedIn()) {
-            $userId = auth()->id();
-        }
 
         $benchmark->stop('restful');
 
@@ -38,7 +38,7 @@ Events::on('post_system', static function () {
         );
 
         if($request->getJson()) {
-            $body = array_merge($request->getJson(), $request->getRawInput());
+            $body = array_merge(json_decode(json_encode($request->getJSON()), true), $request->getRawInput());
         } else {
             $body = $request->getRawInput();
         }
@@ -53,7 +53,6 @@ Events::on('post_system', static function () {
             }
         }
 
-        //array_merge($headers,$request->getGetPost(), $body)
         $data = [
             'user_id' => $userId,
             'uri'       => (string) $request->getUri(),

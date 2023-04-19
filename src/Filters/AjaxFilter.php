@@ -8,6 +8,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
+use Daycry\RestFul\Traits\Attemptable;
 
 /**
  * Ajax Filter.
@@ -16,11 +17,14 @@ use CodeIgniter\Config\Services;
  */
 class AjaxFilter implements FilterInterface
 {
+    use Attemptable;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         $ajaxOnly = service('settings')->get('RestFul.ajaxOnly');
 
         if ($request->isAJAX() === false && $ajaxOnly) {
+            $this->registerAttempt();
             return Services::response()->setStatusCode(403, lang('RestFul.ajaxOnly'));
         }
     }
