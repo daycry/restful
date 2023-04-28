@@ -40,7 +40,7 @@ class AccessFilter implements FilterInterface
                 }
 
                 if($alias) {
-                    $this->login($endpoint);
+                    $this->doLogin($endpoint);
                 }
 
                 if(!$alias || !auth($alias)->user() || ($scope && !auth($alias)->user()->can($scope))) {

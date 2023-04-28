@@ -15,7 +15,7 @@ trait Authenticable
      * to see if the user has a specific validation type.
      *
      */
-    public function login(?Endpoint $endpoint = null)
+    public function doLogin(?Endpoint $endpoint = null)
     {
         helper('auth');
 

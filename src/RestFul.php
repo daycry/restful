@@ -210,8 +210,8 @@ trait RestFul
              }
 
              $alias = (isset($this->override->auth) && $this->override->auth) ? $this->override->auth : service('settings')->get('RestFul.defaultAuth');
-             if(service('settings')->get('RestFul.accessTokenEnabled')|| ($alias && !auth()->user() && method_exists($this, 'login'))) {
-                 $this->login($this->override);
+             if(service('settings')->get('RestFul.accessTokenEnabled')|| ($alias && !auth()->user() && method_exists($this, 'doLogin'))) {
+                 $this->doLogin($this->override);
              }
 
              if(service('settings')->get('RestFul.enableLimit')) {
