@@ -79,7 +79,7 @@
 
 	<php>
 		<env name="XDEBUG_MODE" value="coverage"/>
-		<server name="app.baseURL" value="https://example.com/"/>
+		<server name="app.baseURL" value="http://localhost/"/>
 
 		<!-- Directory containing phpunit.xml -->
 		<const name="HOMEPATH" value="./"/>
