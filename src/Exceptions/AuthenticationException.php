@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Daycry\RestFul\Exceptions;
 
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Daycry\RestFul\Exceptions\RuntimeException;
 
 class AuthenticationException extends RuntimeException

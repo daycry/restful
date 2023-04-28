@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Daycry\RestFul\Traits;
 
-use CodeIgniter\I18n\Time;
-use Daycry\RestFul\Exceptions\AuthorizationException;
-use Daycry\RestFul\Models\GroupModel;
-use Daycry\RestFul\Models\PermissionModel;
-
 trait Authorizable
 {
     /**
@@ -39,9 +34,7 @@ trait Authorizable
         $response = false;
         if(!in_array($scope, $scopes, true)) {
             $check = substr($scope, 0, strpos($scope, '.')) . '.*';
-            if(in_array($check, $scopes, true)) {
-                $response = true;
-            }
+            $response = (in_array($check, $scopes, true)) ? true : false;
         } else {
             $response = true;
         }

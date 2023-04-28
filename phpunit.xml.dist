@@ -96,12 +96,12 @@
 		<!-- Database configuration -->
 		<env name="database.tests.strictOn" value="true"/>
 		<!-- Uncomment to use alternate testing database configuration -->
-		<env name="database.tests.hostname" value="localhost"/>
+		<!--<env name="database.tests.hostname" value="localhost"/>
 		<env name="database.tests.database" value="restful"/>
 		<env name="database.tests.username" value="root"/>
 		<env name="database.tests.password" value=""/>
 		<env name="database.tests.DBDriver" value="MySQLi"/>
-		<env name="database.tests.DBPrefix" value=""/>
+		<env name="database.tests.DBPrefix" value=""/>-->
 
 	</php>
 </phpunit>

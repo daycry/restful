@@ -20,21 +20,13 @@ abstract class TestCase extends CIUnitTestCase
 
         parent::setUp();
 
+        $this->addRoutes();
+
         // Use Array Settings Handler
         $configSettings           = config('Settings');
         $configSettings->handlers = ['array'];
         $settings                 = new Settings($configSettings);
         Services::injectMock('settings', $settings);
-
-        // Ensure from email is available anywhere during Tests
-        helper('setting');
-        setting('Email.fromEmail', 'foo@example.com');
-        setting('Email.fromName', 'John Smith');
-
-        // Set Config\Security::$csrfProtection to 'session'
-        $config                 = config('Security');
-        $config->csrfProtection = 'session';
-        Factories::injectMock('config', 'Security', $config);
     }
 
     protected function inkectMockAttributes(array $attributes = [])
@@ -46,5 +38,15 @@ abstract class TestCase extends CIUnitTestCase
         }
 
         Factories::injectMock('config', 'RestFul', $config);
+    }
+
+    protected function addRoutes(): void
+    {
+        $routes = service('routes');
+
+        $routes->get('example', '\Tests\Support\Controllers\Example::read');
+        $routes->options('example', '\Tests\Support\Controllers\Example::read');
+
+        Services::injectMock('routes', $routes);
     }
 }

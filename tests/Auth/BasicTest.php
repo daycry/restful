@@ -1,28 +1,19 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Auth;
 
-namespace Tests\Authenticators;
-
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
-use Daycry\RestFul\Filters\AuthFilter;
 
-/**
- * @internal
- */
-final class BasicTest extends FilterTestCase
+class BasicTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
-
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
 
     public function testAuthBasicSuccess(): void
     {
@@ -43,8 +34,12 @@ final class BasicTest extends FilterTestCase
 
         $result = $this->call('get', 'example');
 
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     public function testAuthBasicWithoutUser(): void
@@ -56,8 +51,13 @@ final class BasicTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     public function testAuthBasicWithoutPassword(): void
@@ -69,11 +69,34 @@ final class BasicTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.noPassword'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.noPassword'), $content->messages->error);
     }
 
     public function testAuthBasicIncorrectUser(): void
+    {
+        $this->inkectMockAttributes(['defaultAuth' => 'basic']);
+
+        $this->withHeaders([
+            'Authorization' => 'Basic ' . \base64_encode('d:p')
+        ]);
+
+        $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
+        $result->assertStatus(403);
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
+    }
+
+    public function testAuthBasicIncorrectPassword(): void
     {
         $this->inkectMockAttributes(['defaultAuth' => 'basic']);
 
@@ -82,8 +105,13 @@ final class BasicTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     protected function tearDown(): void

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Validators;
+namespace Tests\Filters;
 
 use Tests\Support\FilterTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -37,7 +37,7 @@ final class AccessTest extends FilterTestCase
 
         auth('basic')->authenticate();
 
-        $result = $this->call('get', 'example');
+        $result = $this->call('get', 'example-filter');
         $result->assertStatus(200);
         $result->assertSee("Passed");
     }
@@ -54,7 +54,7 @@ final class AccessTest extends FilterTestCase
 
         auth('basic')->authenticate();
 
-        $result = $this->call('get', 'example-write');
+        $result = $this->call('get', 'example-filter-write');
         $result->assertStatus(200);
         $result->assertSee("Passed");
     }
@@ -71,7 +71,7 @@ final class AccessTest extends FilterTestCase
 
         auth('basic')->authenticate();
 
-        $result = $this->call('get', 'example-noread');
+        $result = $this->call('get', 'example-filter-noread');
         $result->assertStatus(401);
         $this->assertSame(lang('RestFul.notEnoughPrivilege'), $result->response()->getReasonPhrase());
     }
@@ -80,7 +80,7 @@ final class AccessTest extends FilterTestCase
     {
         $this->inkectMockAttributes(['enableCheckAccess' => true]);
 
-        $result = $this->call('get', 'example');
+        $result = $this->call('get', 'example-filter');
         $result->assertStatus(401);
         $this->assertSame(lang('RestFul.notEnoughPrivilege'), $result->response()->getReasonPhrase());
     }

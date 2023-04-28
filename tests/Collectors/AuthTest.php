@@ -10,8 +10,6 @@ use Tests\Support\Database\Seeds\TestSeeder;
 use Daycry\RestFul\Auth as RestFulAuth;
 use Daycry\RestFul\Authenticators\Basic;
 use Daycry\RestFul\Collectors\Auth;
-use Daycry\RestFul\Entities\User;
-use Daycry\RestFul\Models\UserModel;
 
 use Tests\Support\TestCase;
 

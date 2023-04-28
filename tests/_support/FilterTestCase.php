@@ -7,7 +7,6 @@ namespace Tests\Support;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\FeatureTestTrait;
 use Config\Services;
-use Tests\Support\TestCase;
 
 /**
  * @internal
@@ -43,7 +42,7 @@ abstract class FilterTestCase extends TestCase
         Factories::injectMock('filters', 'filters', $filterConfig);
     }
 
-    private function addRoutes(): void
+    protected function addRoutes(): void
     {
         $routes = service('routes');
 
@@ -63,15 +62,15 @@ abstract class FilterTestCase extends TestCase
 
         $routes->options('filter-route', static function (): void {
             echo 'Passed';
-        }, ['filter' => $this->alias . ':users-read']);
+        }, ['filter' => $this->alias . ':users.read']);
 
         $routes->get('filter-route', static function (): void {
             echo 'Passed';
-        }, ['filter' => $this->alias . ':users-read']);
+        }, ['filter' => $this->alias . ':users.read']);
 
-        $routes->get('example', '\Tests\Support\Controllers\Example::read', ['filter' => $this->alias . ':users.read']);
-        $routes->get('example-write', '\Tests\Support\Controllers\Example::write', ['filter' => $this->alias . ':users.write']);
-        $routes->get('example-noread', '\Tests\Support\Controllers\Example::noread', ['filter' => $this->alias . ':admins.noread']);
+        $routes->get('example-filter', '\Tests\Support\Controllers\Example::read', ['filter' => $this->alias . ':users.read']);
+        $routes->get('example-filter-write', '\Tests\Support\Controllers\Example::write', ['filter' => $this->alias . ':users.write']);
+        $routes->get('example-filter-noread', '\Tests\Support\Controllers\Example::noread', ['filter' => $this->alias . ':admins.noread']);
 
         Services::injectMock('routes', $routes);
     }

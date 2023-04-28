@@ -1,19 +1,13 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Auth;
 
-namespace Tests\Authenticators;
-
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
-use Daycry\RestFul\Filters\AuthFilter;
 
-/**
- * @internal
- */
-final class NoAuthenticatorTest extends FilterTestCase
+class NoAuthenticatorTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
@@ -21,14 +15,14 @@ final class NoAuthenticatorTest extends FilterTestCase
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
 
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
-
     public function testNoAuthSuccess(): void
     {
         $this->inkectMockAttributes(['defaultAuth' => null]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(200);
         $result->assertSee("Passed");
     }

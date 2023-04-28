@@ -21,7 +21,8 @@ class LogModel extends BaseModel
         'params',
         'ip_address',
         'duration',
-        'response_code'
+        'response_code',
+        'authorized'
     ];
 
     protected $useTimestamps = true;

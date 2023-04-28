@@ -9,7 +9,7 @@ use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Interfaces\AuthenticatorInterface;
 use Daycry\RestFul\Entities\User;
 use Daycry\RestFul\Models\UserModel;
-use Daycry\RestFul\Exceptions\BaseException;
+use Daycry\RestFul\Interfaces\BaseException;
 
 /**
  * @method Result    attempt(array $credentials)

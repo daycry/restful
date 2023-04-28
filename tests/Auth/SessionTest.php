@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Authenticators;
+namespace Tests\Auth;
 
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
@@ -13,16 +13,13 @@ use Daycry\RestFul\Filters\AuthFilter;
 /**
  * @internal
  */
-final class SessionTest extends FilterTestCase
+final class SessionTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
-
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
 
     public function testAuthSessionSuccess(): void
     {
@@ -50,23 +47,27 @@ final class SessionTest extends FilterTestCase
         $this->withSession($values);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     public function testAuthSessionWithoutSession(): void
     {
         $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => 'sessionTest']);
 
-        $values = [
-            'sessionTest1' => 'daycry1',
-        ];
-
-        $this->withSession($values);
-
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     protected function tearDown(): void

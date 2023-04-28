@@ -21,6 +21,11 @@ class TestSeeder extends Seeder
                 'username'=> 'daycry',
                 'scopes'        => \serialize(['users.read']),
                 'active'  => 1
+            ],
+            [
+                'username'=> 'daycry2',
+                'scopes'        => \serialize(['users.read']),
+                'active'  => 1
             ]
         ];
 
@@ -50,6 +55,14 @@ class TestSeeder extends Seeder
                 'ignore_limits' => 0,
                 'is_private'    => 1,
                 'ip_addresses'  => \serialize(['0.0.0.0'])
+            ],
+            [
+                'user_id'       => 2,
+                'type'       => 'token',
+                'secret'        => '123abf7e82c4a94d4945bbda0958ee58ffe9117f9b317d586fc4192680033593',
+                'ignore_limits' => 0,
+                'is_private'    => 1,
+                'ip_addresses'  => \serialize(['10.85.26.30'])
             ]
         ];
 
@@ -103,7 +116,7 @@ class TestSeeder extends Seeder
                 'auth'          => null,
                 'access_token'  => null,
                 'log'           => null,
-                'limit'         => 10,
+                'limit'         => 1,
                 'time'          => 3600,
                 'scope'        => "users.read"
             ],

@@ -1,30 +1,21 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Auth;
 
-namespace Tests\Authenticators;
-
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
-use Daycry\RestFul\Filters\AuthFilter;
 use Tests\Support\Authenticators\BasicAuthenticatorLibrary;
 use Tests\Support\Authenticators\BasicBadAuthenticatorLibrary;
 
-/**
- * @internal
- */
-final class LibraryTest extends FilterTestCase
+class LibraryTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
-
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
 
     public function testAuthBasicLibrarySuccess(): void
     {
@@ -48,8 +39,13 @@ final class LibraryTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidLibraryImplementation'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidLibraryImplementation'), $content->messages->error);
     }
 
     public function testAuthInvalidAuthenticatorLibraryImplementation(): void
@@ -61,8 +57,13 @@ final class LibraryTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.unknownAuthenticator', ['basic']), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.unknownAuthenticator', ['basic']), $content->messages->error);
     }
 
     public function testAuthBasicLibraryInvalidUsername(): void
@@ -74,8 +75,13 @@ final class LibraryTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     public function testAuthBasicLibraryInvalidPassword(): void
@@ -87,8 +93,13 @@ final class LibraryTest extends FilterTestCase
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     protected function tearDown(): void

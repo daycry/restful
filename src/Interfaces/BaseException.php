@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Daycry\RestFul\Exceptions;
+namespace Daycry\RestFul\Interfaces;
 
 use Throwable;
 

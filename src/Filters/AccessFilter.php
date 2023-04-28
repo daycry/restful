@@ -8,8 +8,9 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
-use Daycry\RestFul\Exceptions\BaseException;
-use Daycry\RestFul\Traits\Attemptable;
+use Daycry\RestFul\Exceptions\AuthorizationException;
+use Daycry\RestFul\Interfaces\BaseException;
+use Daycry\RestFul\Traits\Authenticable;
 
 /**
  * Access Filter.
@@ -18,29 +19,40 @@ use Daycry\RestFul\Traits\Attemptable;
  */
 class AccessFilter implements FilterInterface
 {
-    use Attemptable;
+    use Authenticable;
 
     public function before(RequestInterface $request, $arguments = null)
     {
-        helper(['checkEndpoint', 'auth']);
+        helper(['checkEndpoint', 'auth', 'restFulLog']);
+
+        $logger = restFulLog();
 
         $enableCheckAccess = service('settings')->get('RestFul.enableCheckAccess');
         $alias = service('settings')->get('RestFul.defaultAuth');
+
         $scope = ($arguments) ? $arguments[0] : null;
+
         if ($enableCheckAccess) {
             try {
                 if ($endpoint = checkEndpoint()) {
-                    $alias = $endpoint->auth ?? $alias;
-                    $scope = $endpoint->scope ?? $scope;
+                    $alias = ($endpoint->auth) ? $endpoint->auth : $alias;
+                    $scope = ($endpoint->scope) ? $endpoint->scope : $scope;
+                }
+
+                if($alias) {
+                    $this->login($endpoint);
                 }
 
                 if(!$alias || !auth($alias)->user() || ($scope && !auth($alias)->user()->can($scope))) {
-                    $this->registerAttempt();
-                    return Services::response()->setStatusCode(401, lang('RestFul.notEnoughPrivilege'));
+                    //$this->registerAttempt();
+                    throw AuthorizationException::forNotEnoughPrivilege();
                 }
 
             } catch(BaseException $ex) {
-                $this->registerAttempt();
+
+                $logger->setAuthorized(false)
+                    ->setResponseCode($ex->getCode())
+                    ->save();
                 return Services::response()->setStatusCode($ex->getCode(), $ex->getMessage());
             }
         }

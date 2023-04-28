@@ -1,19 +1,13 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Auth;
 
-namespace Tests\Authenticators;
-
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
-use Daycry\RestFul\Filters\AuthFilter;
 
-/**
- * @internal
- */
-final class BadAuthenticatorTest extends FilterTestCase
+class BadAuthenticatorTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
@@ -21,16 +15,22 @@ final class BadAuthenticatorTest extends FilterTestCase
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
 
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
-
     public function testBadAuthSuccess(): void
     {
         $this->inkectMockAttributes(['defaultAuth' => 'basic1']);
 
+        $this->withHeaders([
+            'Authorization' => 'Basic ' . \base64_encode('daycry:password')
+        ]);
+
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.unknownAuthenticator', ['basic1']), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.unknownAuthenticator', ['basic1']), $content->messages->error);
     }
 
     protected function tearDown(): void

@@ -178,6 +178,8 @@ class RestFul extends BaseConfig
     *
     * If using CORS checks, you can set the methods you want to be allowed
     */
+    public bool $checkCors = false;
+
     public array $allowedCorsMethods = [
         'GET',
         'POST',

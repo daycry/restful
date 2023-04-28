@@ -2,7 +2,7 @@
 
 return [
     'ajaxOnly' => 'Only AJAX requests are allowed',
-    'noContent' => 'No content',
+    'noContent' => 'No Content',
     'invalidAttemptsLimit' => 'IP Blocked',
     'ipDenied'        => 'IP denied',
     'invalidAccessToken' => 'Invalid Access Token',
@@ -15,4 +15,6 @@ return [
     'notEnoughPrivilege'    => 'You do not have the necessary permission to perform the desired operation.',
     'invalidObjectForCast' => 'Invalid Object for Casting',
     'invalidParamsForMethod' => 'Invalid params for this method: \'{param}\'',
+    'unsupportedProtocol' => ' Invalid protocol',
+    'invalidMethod' => 'Invalid method: \'{method}\'',
 ];

@@ -1,53 +1,29 @@
 <?php
 
-declare(strict_types=1);
+namespace Daycry\RestFul\Validators;
 
-namespace Daycry\RestFul\Filters;
-
-use CodeIgniter\Config\Services;
-use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\ResponseInterface;
+use Daycry\RestFul\Exceptions\CorsException;
 
-/**
- * Cors Filter.
- *
- * @param array|null $arguments
- */
-class CorsFilter implements FilterInterface
+class Cors
 {
-    public function before(RequestInterface $request, $arguments = null)
+    public static function check(ResponseInterface &$response)
     {
-        $response = Services::response();
+        $request = Services::request();
 
         if ($request->getMethod() === 'options') {
             $response->setStatusCode(204, lang('RestFul.noContent'));
-            return $response;
+            throw CorsException::forNocontent();
         }
-    }
 
-    private function _isCors(RequestInterface $request)
-    {
-        return $request->hasHeader('origin') && !self::_isSameHost($request);
-    }
+        // Convert the config items into strings
+        $allowedCorsHeaders = implode(', ', service('settings')->get('RestFul.allowedCorsHeaders'));
+        $allowedCorsMethods = implode(', ', service('settings')->get('RestFul.allowedCorsMethods'));
 
-    private function _isSameHost(RequestInterface $request): bool
-    {
-        return $request->getHeaderLine('origin') === Factories::config('App')->baseURL;
-    }
-
-    /**
-     *
-     * @param array|null $arguments
-     */
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-    {
-        $allowedCorsHeaders = service('settings')->get('RestFul.allowedCorsHeaders');
-        $allowedCorsMethods = service('settings')->get('RestFul.allowedCorsMethods');
-
-        if ($this->_isCors($request)) {
+        if (self::_isCors($request)) {
             if (service('settings')->get('RestFul.allowAnyCorsDomain')) {
                 $response->setHeader('Access-Control-Allow-Origin', '*');
             } else {
@@ -71,8 +47,16 @@ class CorsFilter implements FilterInterface
                     $response->setHeader($header, $value);
                 }
             }
-
-            return $response;
         }
+    }
+
+    private static function _isCors(RequestInterface $request)
+    {
+        return $request->hasHeader('origin') && !self::_isSameHost($request);
+    }
+
+    private static function _isSameHost(RequestInterface $request): bool
+    {
+        return $request->getHeaderLine('origin') === Factories::config('App')->baseURL;
     }
 }

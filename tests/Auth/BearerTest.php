@@ -1,29 +1,20 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Auth;
 
-namespace Tests\Authenticators;
-
-use Tests\Support\FilterTestCase;
+use Tests\Support\TestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Database\Seeds\TestSeeder;
-use Daycry\RestFul\Filters\AuthFilter;
 use Daycry\JWT\JWT;
 
-/**
- * @internal
- */
-final class BearerTest extends FilterTestCase
+class BearerTest extends TestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
     protected $namespace = '\Daycry\RestFul';
     protected $seed = TestSeeder::class;
-
-    protected string $alias     = 'auth';
-    protected mixed $classname = AuthFilter::class;
 
     public function testAuthBearerSuccess(): void
     {
@@ -44,15 +35,20 @@ final class BearerTest extends FilterTestCase
     {
         $this->inkectMockAttributes(['defaultAuth' => 'bearer']);
 
-        $bearer = (new JWT())->encode(['username' => 'daycry', 'text' => 'Content'], 'daycry2');
+        $bearer = (new JWT())->encode(['username' => 'daycry', 'text' => 'Content'], 'daycry3');
 
         $this->withHeaders([
             'Authorization' => 'Bearer ' . $bearer
         ]);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     public function testAuthBearerWithoutBearer(): void
@@ -60,8 +56,13 @@ final class BearerTest extends FilterTestCase
         $this->inkectMockAttributes(['defaultAuth' => 'bearer']);
 
         $result = $this->call('get', 'example');
+
+        $content = \json_decode($result->getJson());
+
         $result->assertStatus(403);
-        $this->assertSame(lang('RestFul.invalidCredentials'), $result->response()->getReasonPhrase());
+        $this->assertTrue(isset($content->messages->error));
+        $this->assertSame('Forbidden', $result->response()->getReasonPhrase());
+        $this->assertSame(lang('RestFul.invalidCredentials'), $content->messages->error);
     }
 
     protected function tearDown(): void

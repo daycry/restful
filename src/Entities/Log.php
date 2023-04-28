@@ -11,4 +11,11 @@ class Log extends Entity
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'authorized' => '?intBol'
+    ];
 }
