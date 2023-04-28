@@ -97,7 +97,7 @@ trait RestFul
          }
 
          $this->args = $this->request->getAllParams();
-         $this->content = $this->args['body'];
+         $this->content = (!empty($this->args['body'])) ? $this->args['body'] : new stdClass();
 
          // Extend this function to apply additional checking early on in the process
          $this->earlyChecks();
