@@ -5,7 +5,6 @@ namespace Daycry\RestFul;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use Config\Validation;
 use CodeIgniter\Router\Router;
@@ -150,25 +149,25 @@ trait RestFul
 
      protected function validation(string $rules, $data = null, ?Validation $config = null, bool $getShared = true, bool $filter = false)
      {
-         $config ??= config('Validation');
-         $data ??= $this->content;
+        $config ??= config('Validation');
+        $data ??= $this->content;
 
-         $this->validator = Services::validation($config, $getShared);
+        $this->validator = Services::validation($config, $getShared);
 
-         $content = json_decode(json_encode($data), true);
-         if (!$this->validator->run($content, $rules)) {
-             throw new ValidationException();
-         }
+        $content = json_decode(json_encode($data), true);
+        if (!$this->validator->run($content, $rules)) {
+            throw ValidationException::validationData();
+        }
 
-         if ($filter) {
-             if ($data) {
-                 foreach ($data as $key => $value) {
-                     if (!array_key_exists($key, $config->{$rules})) {
-                         throw ValidationException::validationtMethodParamsError($key);
-                     }
-                 }
-             }
-         }
+        if ($filter) {
+            if ($data) {
+                foreach ($data as $key => $value) {
+                    if (!array_key_exists($key, $config->{$rules})) {
+                        throw ValidationException::validationtMethodParamsError($key);
+                    }
+                }
+            }
+        }
      }
 
      /**
