@@ -15,6 +15,7 @@ parameters:
 		- '#Access to an undefined property CodeIgniter\\HTTP\\RequestInterface::\$[A-Za-z]#'
 		- '#Call to an undefined method CodeIgniter\\HTTP\\IncomingRequest::[A-Za-z].+\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::[A-Za-z].+\(\)#'
+		- '#Call to deprecated function random_string\(\)#'
 		- '#Access to an undefined property CodeIgniter\\Config\\BaseConfig::\$[A-Za-z]#'
 		- '#Call to deprecated method getMethod\(\) of class CodeIgniter\\HTTP\\OutgoingRequestInterface#'
 		- '#Call to deprecated method request\(\)#'
