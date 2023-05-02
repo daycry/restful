@@ -16,8 +16,7 @@ final class SerializeCast extends BaseCast
      */
     public static function get($value, array $params = []): ?array
     {
-        if($value)
-        {
+        if($value) {
             return unserialize($value);
         }
         return null;
@@ -28,8 +27,7 @@ final class SerializeCast extends BaseCast
      */
     public static function set($value, array $params = []): ?string
     {
-        if($value)
-        {
+        if($value) {
             return serialize($value);
         }
         return null;

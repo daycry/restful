@@ -322,9 +322,9 @@ class RestFul extends BaseConfig
 
     /**
      * Exclude methods in discovering
-     * 
+     *
      * This is useful when you use traits or the class extends the initController method
-     * 
+     *
      * Ex: doLogin is a Authenticable trait method and initController is a method of ResourceController class
      */
     public array $excludeMethods = ['initController', '_remap', 'doLogin'];
