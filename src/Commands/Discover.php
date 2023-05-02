@@ -95,7 +95,7 @@ class Discover extends BaseCommand
         $methods = array();
 
         foreach ($f->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
-            if (strpos($m->name, '__') !== 0) {
+            if (strpos($m->name, '__') !== 0 && $m->class == $namespace && !in_array($m->name, service('settings')->get('RestFul.excludeMethods'))) {
                 $methods[] = $m->name;
             }
         }
