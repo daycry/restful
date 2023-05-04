@@ -71,8 +71,15 @@ For Example: `app/Config/Validation.php` or if rules are in custom namespace `ap
 ```php
 <?php namespace App\Controllers;
 
-class Center extends \Daycry\RestServer\RestServer
+use CodeIgniter\RESTful\ResourceController;
+use Daycry\RestFul\RestFul;
+use Daycry\RestFul\Traits\Authenticable;
+
+class Center extends ResourceController
 {
+    use RestFul;
+    use Authenticable;
+
     public function index()
     {
         $this->validation( 'requiredLogin', $this->content );
@@ -89,8 +96,15 @@ If you want you can use the object **$this->request** for get this params if you
 ```php
 <?php namespace App\Controllers;
 
-class Center extends \Daycry\RestServer\RestServer
+use CodeIgniter\RESTful\ResourceController;
+use Daycry\RestFul\RestFul;
+use Daycry\RestFul\Traits\Authenticable;
+
+class Center extends ResourceController
 {
+    use RestFul;
+    use Authenticable;
+
     public function index()
     {
         $this->validation( 'requiredLogin', $this->content, config( Example\\Validation ), true, true );
@@ -116,7 +130,7 @@ You can restrict requests setting scopes by access filter
 
 <?php
 
-namespace Ldap\Config;
+namespace App\Config;
 
 $routes->group('group', ['namespace' => 'App\Controllers'], static function ($routes) {
     $routes->post('search/(:segment)', 'Search::$1', [ 'filter' => 'access:example.read' ]);
