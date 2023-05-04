@@ -29,7 +29,7 @@
 			<directory suffix=".php">./src/Language</directory>
 		</exclude>
 		<report>
-			<cobertura outputFile="build/phpunit/cobertura.xml"/>
+			<clover outputFile="build/phpunit/clover.xml"/>
 			<html outputDirectory="build/phpunit/html"/>
 			<php outputFile="build/phpunit/coverage.serialized"/>
 			<text outputFile="php://stdout" showUncoveredFiles="false"/>
