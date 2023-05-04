@@ -29,11 +29,10 @@
 			<directory suffix=".php">./src/Language</directory>
 		</exclude>
 		<report>
-			<clover outputFile="build/phpunit/clover.xml"/>
-			<html outputDirectory="build/phpunit/html"/>
-			<php outputFile="build/phpunit/coverage.serialized"/>
+			<clover outputFile="build/logs/clover.xml"/>
+			<html outputDirectory="build/logs/html"/>
+			<php outputFile="build/logs/coverage.serialized"/>
 			<text outputFile="php://stdout" showUncoveredFiles="false"/>
-			<xml outputDirectory="build/phpunit/xml-coverage"/>
 		</report>
 	</coverage>
 
