@@ -155,6 +155,15 @@ class RestFul extends BaseConfig
 
     /**
     * --------------------------------------------------------------------------
+    * CORS Allowable Methods
+    * --------------------------------------------------------------------------
+    *
+    * If using CORS checks, you can set the methods you want to be allowed
+    */
+    public bool $checkCors = false;
+
+    /**
+    * --------------------------------------------------------------------------
     * CORS Allowable Headers
     * --------------------------------------------------------------------------
     *
@@ -170,15 +179,6 @@ class RestFul extends BaseConfig
         'X-API-KEY',
         'Authorization'
     ];
-
-    /**
-    * --------------------------------------------------------------------------
-    * CORS Allowable Methods
-    * --------------------------------------------------------------------------
-    *
-    * If using CORS checks, you can set the methods you want to be allowed
-    */
-    public bool $checkCors = false;
 
     public array $allowedCorsMethods = [
         'GET',
@@ -197,7 +197,7 @@ class RestFul extends BaseConfig
     * Set to TRUE to enable Cross-Origin Resource Sharing (CORS) from any
     * source domain
     */
-    public bool $allowAnyCorsDomain = false;
+    public bool $allowAnyCorsDomain = true;
 
     /**
     * --------------------------------------------------------------------------
@@ -212,24 +212,58 @@ class RestFul extends BaseConfig
     public array $allowedCorsOrigins = [];
 
     /**
-    * --------------------------------------------------------------------------
-    * CORS Forced Headers
-    * --------------------------------------------------------------------------
-    *
-    * If using CORS checks, always include the headers and values specified here
-    * in the OPTIONS client preflight.
-    * Example:
-    * $config['forcedCorsHeaders'] = [
-    *   'Access-Control-Allow-Credentials' => 'true'
-    * ];
-    *
-    * Added because of how Sencha Ext JS framework requires the header
-    * Access-Control-Allow-Credentials to be set to true to allow the use of
-    * credentials in the REST Proxy.
-    * See documentation here:
-    * http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
+     * --------------------------------------------------------------------------
+     * CORS Allowed origins patterns
+     * --------------------------------------------------------------------------
+     *
+     * Patterns that can be used with `preg_match` to match the origin.
+     *
+     * @var array
+     */
+    public array $allowedCorsOriginsPatterns = [];
+
+    /**
+     * --------------------------------------------------------------------------
+     * CORS Exposed headers
+     * --------------------------------------------------------------------------
+     *
+     * Headers that are allowed to be exposed to the web server.
+     *
+     * @var array
+     */
+    public array $exposedCorsHeaders = [];
+
+    /*
+    |--------------------------------------------------------------------------
+    | CORS Forced Headers
+    |--------------------------------------------------------------------------
+    |
+    | If using CORS checks, always include the headers and values specified here
+    | in the OPTIONS client preflight.
+    | Example:
+    | $config['forcedCorsHeaders'] = [
+    |   'Access-Control-Allow-Credentials' => 'true'
+    | ];
+    |
+    | Added because of how Sencha Ext JS framework requires the header
+    | Access-Control-Allow-Credentials to be set to true to allow the use of
+    | credentials in the REST Proxy.
+    | See documentation here:
+    | http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
+    |
     */
-    public array $forcedCorsHeaders = [ 'Access-Control-Allow-Credentials' => true ];
+    public array $forcedCorsHeaders = [ 'Access-Control-Allow-Credentials' => 'true' ];
+
+    /**
+     * --------------------------------------------------------------------------
+     * CORS Max age
+     * --------------------------------------------------------------------------
+     *
+     * Indicates how long the results of a preflight request can be cached.
+     *
+     * @var int
+     */
+    public int $corsMaxAge = 0;
 
     /**
     * --------------------------------------------------------------------------

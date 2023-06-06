@@ -13,6 +13,8 @@ use Daycry\RestFul\Entities\User;
 
 class AccessToken extends Base implements AuthenticatorInterface
 {
+    public const ID_TYPE_ACCESS_TOKEN = 'token';
+
     public function __construct(UserModel $provider)
     {
         $this->method = 'session';

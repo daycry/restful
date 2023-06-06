@@ -21,7 +21,6 @@ use Daycry\RestFul\Exceptions\ForbiddenException;
 use Daycry\RestFul\Exceptions\ValidationException;
 use Daycry\RestFul\Models\AttemptModel;
 use Config\Mimes;
-use call_user_func_array;
 use ReflectionProperty;
 use stdClass;
 

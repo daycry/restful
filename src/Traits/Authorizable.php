@@ -17,6 +17,12 @@ trait Authorizable
         $scope = strtolower($scope);
 
         $scopes = ($this->scopes) ? $this->scopes : [];
+
+        // Wildcard present
+        if (in_array('*', $this->scopes, true)) {
+            return true;
+        }
+
         if($this->check($scope, $scopes)) {
             return true;
         }

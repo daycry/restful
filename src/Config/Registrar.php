@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Daycry\RestFul\Config;
 
 use Daycry\RestFul\Filters\AccessFilter;
+use Daycry\RestFul\Filters\CorsFilter;
 
 class Registrar
 {
