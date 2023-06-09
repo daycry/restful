@@ -23,16 +23,19 @@ class IncomingRequest extends BaseIncomingRequest
         parent::__construct($config, $uri, $body, $userAgent);
     }
 
-    public function getAllParams(): array
+    public function getParsedHeaders()
     {
-        $inputFormat = InputFormat::check($this);
-
-        $headers = array_map(
+        return array_map(
             function ($header) {
                 return $header->getValueLine();
             },
             $this->headers()
         );
+    }
+
+    public function getAllParams(): array
+    {
+        $inputFormat = InputFormat::check($this);
 
         if ($inputFormat == 'application/json') {
             $content = $this->getJSON();
@@ -42,6 +45,6 @@ class IncomingRequest extends BaseIncomingRequest
             // @codeCoverageIgnoreEnd
         }
 
-        return array_merge($this->getGetPost(), $headers, ['body' => $content]);
+        return array_merge($this->getGetPost(), $this->getParsedHeaders(), ['body' => $content]);
     }
 }
