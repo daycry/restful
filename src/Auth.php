@@ -35,7 +35,7 @@ class Auth
     /**
      * The Authenticator alias to use for this request.
      */
-    protected ?string $alias = null;
+    public ?string $alias = null;
 
     protected ?UserModel $userProvider = null;
 
@@ -61,7 +61,7 @@ class Auth
     /**
      * Returns the current authentication class.
      */
-    public function getAuthenticator(): AuthenticatorInterface
+    public function getAuthenticator(): ?AuthenticatorInterface
     {
         return $this->authenticate
             ->factory($this->alias);
@@ -73,7 +73,7 @@ class Auth
      */
     public function user(): ?User
     {
-        return $this->getAuthenticator()->loggedIn()
+        return ($this->getAuthenticator() && $this->getAuthenticator()->loggedIn())
             ? $this->getAuthenticator()->getUser()
             : null;
     }
@@ -92,7 +92,9 @@ class Auth
 
     public function authenticate()
     {
-        return $this->getAuthenticator()->check();
+        return $this->getAuthenticator()
+            ? $this->getAuthenticator()->check()
+            : null;
     }
 
     /**
@@ -133,7 +135,7 @@ class Auth
         try {
             $authenticate = $this->getAuthenticator();
 
-            if (method_exists($authenticate, $method)) {
+            if ($authenticate && method_exists($authenticate, $method)) {
                 return $authenticate->{$method}(...$args);
             }
         } catch(BaseException $ex) {

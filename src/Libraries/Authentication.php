@@ -33,7 +33,7 @@ class Authentication
      *
      * @throws AuthenticationException
      */
-    public function factory(?string $alias = null): AuthenticatorInterface
+    public function factory(?string $alias = null): ?AuthenticatorInterface
     {
         // Determine actual Authenticator alias
         $alias ??= service('settings')->get('RestFul.defaultAuth');
