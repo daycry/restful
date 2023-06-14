@@ -37,6 +37,9 @@ class Authentication
     {
         // Determine actual Authenticator alias
         $alias ??= service('settings')->get('RestFul.defaultAuth');
+        if(!$alias) {
+            return null;
+        }
 
         // Return the cached instance if we have it
         if (! empty($this->instances[$alias])) {
