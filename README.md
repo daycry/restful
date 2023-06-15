@@ -101,11 +101,13 @@ If you want you can use the object **$this->request** for get this params if you
 use CodeIgniter\RESTful\ResourceController;
 use Daycry\RestFul\RestFul;
 use Daycry\RestFul\Traits\Authenticable;
+use Daycry\RestFul\Traits\Validation;
 
 class Center extends ResourceController
 {
     use RestFul;
     use Authenticable;
+    use Validation;
 
     public function index()
     {
