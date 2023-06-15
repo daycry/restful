@@ -26,12 +26,11 @@ class Limit
             $time = ($endpoint->time) ? $endpoint->time : $time;
         }
 
-        try {
-            $userId = auth()->id();
+        $ignoreLimits = false;
+        $userId = null;
+
+        if($userId = auth()->id()) {
             $ignoreLimits = auth()->user()->ignore_limits;
-        } catch(BaseException $ex) {
-            $ignoreLimits = false;
-            $userId = null;
         }
 
         if(!$ignoreLimits) {
