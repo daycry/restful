@@ -6,7 +6,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Config\Services;
-use Config\Validation;
 use CodeIgniter\Router\Router;
 use Daycry\Encryption\Encryption;
 use Daycry\RestFul\Entities\Endpoint;
@@ -18,7 +17,6 @@ use Daycry\RestFul\Validators\Limit;
 use Daycry\RestFul\Libraries\Logger;
 use Daycry\RestFul\Interfaces\BaseException;
 use Daycry\RestFul\Exceptions\ForbiddenException;
-use Daycry\RestFul\Exceptions\ValidationException;
 use Daycry\RestFul\Models\AttemptModel;
 use Config\Mimes;
 use ReflectionProperty;
@@ -143,29 +141,6 @@ trait RestFul
          //reset previous validation at end
          if ($this->validator) {
              $this->validator->reset();
-         }
-     }
-
-     protected function validation(string $rules, $data = null, ?Validation $config = null, bool $getShared = true, bool $filter = false)
-     {
-         $config ??= config('Validation');
-         $data ??= $this->content;
-
-         $this->validator = Services::validation($config, $getShared);
-
-         $content = json_decode(json_encode($data), true);
-         if (!$this->validator->run($content, $rules)) {
-             throw ValidationException::validationData();
-         }
-
-         if ($filter) {
-             if ($data) {
-                 foreach ($data as $key => $value) {
-                     if (!array_key_exists($key, $config->{$rules})) {
-                         throw ValidationException::validationtMethodParamsError($key);
-                     }
-                 }
-             }
          }
      }
 
