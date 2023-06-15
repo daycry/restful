@@ -73,9 +73,15 @@ class Auth
      */
     public function user(): ?User
     {
-        return ($this->getAuthenticator() && $this->getAuthenticator()->loggedIn())
-            ? $this->getAuthenticator()->getUser()
-            : null;
+        if($this->getAuthenticator()) {
+            if($this->getAuthenticator()->loggedIn()) {
+                return $this->getAuthenticator()->getUser();
+            } else {
+                return $this->authenticate();
+            }
+        }
+
+        return null;
     }
 
     /**
