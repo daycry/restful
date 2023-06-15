@@ -74,11 +74,13 @@ For Example: `app/Config/Validation.php` or if rules are in custom namespace `ap
 use CodeIgniter\RESTful\ResourceController;
 use Daycry\RestFul\RestFul;
 use Daycry\RestFul\Traits\Authenticable;
+use Daycry\RestFul\Traits\Validation;
 
 class Center extends ResourceController
 {
     use RestFul;
     use Authenticable;
+    use Validation;
 
     public function index()
     {
