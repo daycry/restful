@@ -196,11 +196,7 @@ trait RestFul
                  throw ForbiddenException::forInvalidMethod($this->router->methodName());
              }
 
-             try {
-                 return call_user_func_array([ $this, $method ], $params);
-             } catch(\Exception $e) {
-                 throw ForbiddenException::forInvalidMethod($method);
-             }
+             return call_user_func_array([ $this, $method ], $params);
 
          } catch (BaseException $ex) {
 
