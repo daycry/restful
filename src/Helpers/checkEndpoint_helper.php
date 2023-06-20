@@ -24,7 +24,7 @@ if (! function_exists('checkEndpoint')) {
             /** @var Controller|null $controller */
             $controller = ($controllers) ? $controllers[0] : null;
             if ($controller) {
-                $endpoints = $controller->getEndpoints($router->methodName());
+                $endpoints = $controller->getEndpoints($controller->controller . '::' . $router->methodName());
                 return ($endpoints) ? $endpoints[0] : null;
             }
         }
