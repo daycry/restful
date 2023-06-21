@@ -61,9 +61,9 @@ trait RestFul
     /**
      * The body of request.
      *
-     * @var object
+     * @var mixed
      */
-    protected ?object $content = null;
+    protected mixed $content = [];
 
     /**
     * Extend this function to apply additional checking early on in the process.
