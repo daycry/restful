@@ -19,7 +19,7 @@ class LibraryTest extends TestCase
 
     public function testAuthBasicLibrarySuccess(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => 'library', 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
+        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => ['basic' => 'library'], 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
 
         $this->withHeaders([
             'Authorization' => 'Basic ' . \base64_encode('daycry:password')
@@ -32,7 +32,7 @@ class LibraryTest extends TestCase
 
     public function testAuthBadBasicLibraryImplementation(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => 'library', 'libraryCustomAuthenticators' => ['basic' => BasicBadAuthenticatorLibrary::class ] ]);
+        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => ['basic' => 'library'], 'libraryCustomAuthenticators' => ['basic' => BasicBadAuthenticatorLibrary::class ] ]);
 
         $this->withHeaders([
             'Authorization' => 'Basic ' . \base64_encode('daycry:password')
@@ -50,7 +50,7 @@ class LibraryTest extends TestCase
 
     public function testAuthInvalidAuthenticatorLibraryImplementation(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => 'library' ]);
+        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => ['basic' => 'library'] ]);
 
         $this->withHeaders([
             'Authorization' => 'Basic ' . \base64_encode('daycry:password')
@@ -68,7 +68,7 @@ class LibraryTest extends TestCase
 
     public function testAuthBasicLibraryInvalidUsername(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => 'library', 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
+        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => ['basic' => 'library'], 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
 
         $this->withHeaders([
             'Authorization' => 'Basic ' . \base64_encode('daycry1:password')
@@ -86,7 +86,7 @@ class LibraryTest extends TestCase
 
     public function testAuthBasicLibraryInvalidPassword(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => 'library', 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
+        $this->inkectMockAttributes(['defaultAuth' => 'basic', 'authSource' => ['basic' => 'library'], 'libraryCustomAuthenticators' => ['basic' => BasicAuthenticatorLibrary::class ] ]);
 
         $this->withHeaders([
             'Authorization' => 'Basic ' . \base64_encode('daycry:password1')

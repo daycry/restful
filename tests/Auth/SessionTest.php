@@ -23,7 +23,7 @@ final class SessionTest extends TestCase
 
     public function testAuthSessionSuccess(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => 'sessionTest']);
+        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => ['session' => 'sessionTest']]);
 
         $values = [
             'sessionTest' => 'daycry',
@@ -38,7 +38,7 @@ final class SessionTest extends TestCase
 
     public function testAuthSessionFailed(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => 'sessionTest']);
+        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => ['session' => 'sessionTest']]);
 
         $values = [
             'sessionTest' => 'daycry1',
@@ -58,7 +58,7 @@ final class SessionTest extends TestCase
 
     public function testAuthSessionWithoutSession(): void
     {
-        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => 'sessionTest']);
+        $this->inkectMockAttributes(['defaultAuth' => 'session', 'authSource' => ['session' => 'sessionTest']]);
 
         $result = $this->call('get', 'example');
 

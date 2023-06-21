@@ -74,154 +74,155 @@ trait RestFul
     {
     }
 
-     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-     {
-         helper(['security', 'checkEndpoint', 'auth', 'restFulLog']);
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        helper(['security', 'checkEndpoint', 'auth', 'restFulLog']);
 
-         $this->_logger = restFulLog();
+        $this->_logger = restFulLog();
 
-         parent::initController($request, $response, $logger);
+        parent::initController($request, $response, $logger);
 
-         $this->router = Services::router();
-         $this->encryption = new Encryption();
+        $this->router = Services::router();
+        $this->encryption = new Encryption();
 
-         $this->override = checkEndpoint();
+        $this->override = checkEndpoint();
 
-         if(method_exists($this, 'setFormat')) {
-             $output = $this->request->negotiate('media', config('Format')->supportedResponseFormats);
-             $output = Mimes::guessExtensionFromType($output);
-             $this->setFormat($output);
-         }
+        if(method_exists($this, 'setFormat')) {
+            $output = $this->request->negotiate('media', config('Format')->supportedResponseFormats);
+            $output = Mimes::guessExtensionFromType($output);
+            $this->setFormat($output);
+        }
 
-         $this->args = $this->request->getAllParams();
-         $this->content = (!empty($this->args['body'])) ? $this->args['body'] : new stdClass();
+        $this->args = $this->request->getAllParams();
+        $this->content = (!empty($this->args['body'])) ? $this->args['body'] : new stdClass();
 
-         // Extend this function to apply additional checking early on in the process
-         $this->earlyChecks();
-     }
+        // Extend this function to apply additional checking early on in the process
+        $this->earlyChecks();
+    }
 
-     /**
-      * De-constructor.
-      *
-      * @return void
-      */
-     public function __destruct()
-     {
-         if ($this->request) {
-             $this->_logRequest();
+    /**
+     * De-constructor.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        if ($this->request) {
+            $this->_logRequest();
 
-             if (service('settings')->get('RestFul.enableInvalidAttempts') == true) {
-                 $attemptModel = new AttemptModel();
-                 $attempt = $attemptModel->where('ip_address', $this->request->getIPAddress())->first();
+            if (service('settings')->get('RestFul.enableInvalidAttempts') == true) {
+                $attemptModel = new AttemptModel();
+                $attempt = $attemptModel->where('ip_address', $this->request->getIPAddress())->first();
 
-                 if ($this->_isRequestAuthorized === false) {
-                     if ($attempt === null) {
-                         $attempt = [
-                                 'ip_address' => $this->request->getIPAddress(),
-                                 'attempts'      => 1,
-                                 'hour_started' => time(),
-                             ];
+                if ($this->_isRequestAuthorized === false) {
+                    if ($attempt === null) {
+                        $attempt = [
+                                'ip_address' => $this->request->getIPAddress(),
+                                'attempts'      => 1,
+                                'hour_started' => time(),
+                            ];
 
-                         $attemptModel->save($attempt);
-                     } else {
-                         if ($attempt->attempts < service('settings')->get('RestFul.maxAttempts')) {
-                             $attempt->attempts = $attempt->attempts + 1;
-                             $attempt->hour_started = time();
-                             $attemptModel->save($attempt);
-                         }
-                     }
-                 } else {
-                     if ($attempt) {
-                         $attemptModel->delete($attempt->id, true);
-                     }
-                 }
-             }
-         }
+                        $attemptModel->save($attempt);
+                    } else {
+                        if ($attempt->attempts < service('settings')->get('RestFul.maxAttempts')) {
+                            $attempt->attempts = $attempt->attempts + 1;
+                            $attempt->hour_started = time();
+                            $attemptModel->save($attempt);
+                        }
+                    }
+                } else {
+                    if ($attempt) {
+                        $attemptModel->delete($attempt->id, true);
+                    }
+                }
+            }
+        }
 
-         //reset previous validation at end
-         if ($this->validator) {
-             $this->validator->reset();
-         }
-     }
+        //reset previous validation at end
+        if ($this->validator) {
+            $this->validator->reset();
+        }
+    }
 
-     /**
-      * Requests are not made to methods directly, the request will be for
-      * an "object". This simply maps the object and method to the correct
-      * Controller method.
-      *
-      * @param string $method
-      * @param array  $params     The params passed to the controller method
-      *
-      * @throws BaseException
-      */
-     public function _remap($method, ...$params)
-     {
-         try {
-             if (config('App')->forceGlobalSecureRequests && $this->request->isSecure() === false) {
-                 // @codeCoverageIgnoreStart
-                 throw ForbiddenException::forUnsupportedProtocol();
-                 // @codeCoverageIgnoreEnd
-             }
+    /**
+     * Requests are not made to methods directly, the request will be for
+     * an "object". This simply maps the object and method to the correct
+     * Controller method.
+     *
+     * @param string $method
+     * @param array  $params     The params passed to the controller method
+     *
+     * @throws BaseException
+     */
+    public function _remap($method, ...$params)
+    {
+        try {
+            if (config('App')->forceGlobalSecureRequests && $this->request->isSecure() === false) {
+                // @codeCoverageIgnoreStart
+                throw ForbiddenException::forUnsupportedProtocol();
+                // @codeCoverageIgnoreEnd
+            }
 
-             if ($this->request->isAJAX() === false && service('settings')->get('RestFul.ajaxOnly')) {
-                 throw ForbiddenException::forOnlyAjax();
-             }
+            if ($this->request->isAJAX() === false && service('settings')->get('RestFul.ajaxOnly')) {
+                throw ForbiddenException::forOnlyAjax();
+            }
 
-             if (service('settings')->get('RestFul.checkCors') == true) {
-                 Cors::check($this->response);
-             }
+            if (service('settings')->get('RestFul.checkCors') == true) {
+                Cors::check($this->response);
+            }
 
-             if (service('settings')->get('RestFul.enableInvalidAttempts') == true) {
-                 Attempt::check($this->response);
-             }
+            if (service('settings')->get('RestFul.enableInvalidAttempts') == true) {
+                Attempt::check($this->response);
+            }
 
-             if (service('settings')->get('RestFul.ipBlacklistEnabled') == true) {
-                 Blacklist::check($this->response);
-             }
+            if (service('settings')->get('RestFul.ipBlacklistEnabled') == true) {
+                Blacklist::check($this->response);
+            }
 
-             if (service('settings')->get('RestFul.ipWhitelistEnabled') == true) {
-                 Whitelist::check($this->response);
-             }
+            if (service('settings')->get('RestFul.ipWhitelistEnabled') == true) {
+                Whitelist::check($this->response);
+            }
 
-             $alias = (isset($this->override->auth) && $this->override->auth) ? $this->override->auth : service('settings')->get('RestFul.defaultAuth');
-             if(service('settings')->get('RestFul.accessTokenEnabled')|| ($alias && !auth()->user() && method_exists($this, 'doLogin'))) {
-                 $this->doLogin($this->override);
-             }
+            $alias = (isset($this->override->auth) && $this->override->auth) ? $this->override->auth : service('settings')->get('RestFul.defaultAuth');
 
-             if(service('settings')->get('RestFul.enableLimit')) {
-                 Limit::check($this->override);
-             }
+            if(method_exists($this, 'doLogin')) {
+                $this->doLogin($this->override);
+            }
 
-             if (!method_exists($this, $method)) {
-                 throw ForbiddenException::forInvalidMethod($this->router->methodName());
-             }
+            if(service('settings')->get('RestFul.enableLimit')) {
+                Limit::check($this->override);
+            }
 
-             return call_user_func_array([ $this, $method ], $params);
+            if (!method_exists($this, $method)) {
+                throw ForbiddenException::forInvalidMethod($this->router->methodName());
+            }
 
-         } catch (BaseException $ex) {
+            return call_user_func_array([ $this, $method ], $params);
 
-             if(property_exists($ex, 'authorized')) {
-                 $this->_isRequestAuthorized = (new ReflectionProperty($ex, 'authorized'))->getValue();
-             }
+        } catch (BaseException $ex) {
 
-             $message = ($this->validator && $this->validator->getErrors()) ? $this->validator->getErrors() : $ex->getMessage();
+            if(property_exists($ex, 'authorized')) {
+                $this->_isRequestAuthorized = (new ReflectionProperty($ex, 'authorized'))->getValue();
+            }
 
-             if ($ex->getCode()) {
-                 return $this->fail($message, $ex->getCode());
-             } else {
-                 return $this->fail($message);
-             }
-         }
-     }
+            $message = ($this->validator && $this->validator->getErrors()) ? $this->validator->getErrors() : $ex->getMessage();
 
-     /**
-      * Add the request to the log table.
-      */
-     protected function _logRequest()
-     {
-         $this->_logger
-             ->setAuthorized($this->_isRequestAuthorized)
-             ->setResponseCode($this->response->getStatusCode())
-             ->save();
-     }
+            if ($ex->getCode()) {
+                return $this->fail($message, $ex->getCode());
+            } else {
+                return $this->fail($message);
+            }
+        }
+    }
+
+    /**
+     * Add the request to the log table.
+     */
+    protected function _logRequest()
+    {
+        $this->_logger
+            ->setAuthorized($this->_isRequestAuthorized)
+            ->setResponseCode($this->response->getStatusCode())
+            ->save();
+    }
 }

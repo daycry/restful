@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Daycry\RestFul\Traits;
 
 use Daycry\RestFul\Entities\Endpoint;
+use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Validators\AccessToken;
 use Daycry\RestFul\Interfaces\BaseException;
 
@@ -25,8 +26,14 @@ trait Authenticable
         $user = false;
 
         try {
-            AccessToken::check($endpoint);
-            $user = auth()->user();
+            if(AccessToken::isEnabled($endpoint)) {
+                AccessToken::check($endpoint);
+                $user = auth()->loggedIn();
+                if(!$user) {
+                    throw AuthenticationException::forInvalidAccessToken();
+                }
+            }
+
         } catch(BaseException $ex) {
             if($strictApiAndAuth || !$alias) {
                 throw $ex;

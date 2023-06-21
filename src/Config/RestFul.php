@@ -108,9 +108,16 @@ class RestFul extends BaseConfig
      *
      * e.g: md5('admin:REST API:1234') = '1e957ebc35631ab22d5bd6526bd14ea2'
      *
-     * @var string
+     * @var array
      */
-    public ?string $authSource = null;
+    public array $authSource = [
+        'basic'     => null,
+        'digest'    => null,
+        'bearer'    => null,
+        'session'   => null,
+        'whitelist' => null,
+        'token'     => null
+    ];
 
     /**
      * --------------------------------------------------------------------
@@ -123,10 +130,12 @@ class RestFul extends BaseConfig
 
     public array $libraryCustomAuthenticators =
     [
-        'basic' => null,
-        'digest' => null,
-        'bearer' => null,
-        'session' => null
+        'basic'     => null,
+        'digest'    => null,
+        'bearer'    => null,
+        'session'   => null,
+        'whitelist' => null,
+        'token'     => null
     ];
 
     /**

@@ -26,7 +26,8 @@
         "codeigniter4/devkit": "^1",
         "codeigniter4/framework": "^4",
         "mikey179/vfsstream": "^1",
-        "mockery/mockery": "^1"
+        "mockery/mockery": "^1",
+        "rector/rector": "0.15.12"
     },
     "autoload":
     {
@@ -50,16 +51,14 @@
             "bash admin/setup.sh"
         ],
         "analyze": [
-            "phpstan analyze",
-            "psalm",
-            "rector process --dry-run"
+            "vendor/bin/phpstan analyze",
+            "vendor/bin/rector process --dry-run"
         ],
         "sa": "@analyze",
         "ci": [
             "Composer\\Config::disableProcessTimeout",
             "@cs",
             "@deduplicate",
-            "@inspect",
             "@analyze",
             "@test"
         ],
@@ -71,11 +70,13 @@
             "php-cs-fixer fix src --ansi --verbose --diff",
             "php-cs-fixer fix tests --ansi --verbose --diff"
         ],
-        "deduplicate": "phpcpd app/ src/ --exclude src/Database/Migrations/2023-03-13-000001_create_core_tables.php",
-        "inspect": "deptrac analyze --cache-file=build/deptrac.cache",
+        "deduplicate": "php phpcpd.phar src/ --exclude src/Database/Migrations/2023-03-13-000001_create_core_tables.php",
         "mutate": "infection --threads=2 --skip-initial-tests --coverage=build/phpunit",
         "style": "@cs-fix",
-        "test": "vendor/bin/phpunit"
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpunit"
+        ]
     },
     "config": {
         "allow-plugins": {

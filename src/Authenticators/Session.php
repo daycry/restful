@@ -24,11 +24,11 @@ class Session extends Base implements AuthenticatorInterface
         $session = \Config\Services::session();
 
         // If false, then the user isn't logged in
-        if (!$session->get(service('settings')->get('RestFul.authSource'))) {
+        if (!$session->get(service('settings')->get('RestFul.authSource')[$this->method])) {
             throw AuthenticationException::forInvalidCredentials();
         }
 
-        return $this->checkLogin($session->get(service('settings')->get('RestFul.authSource')));
+        return $this->checkLogin($session->get(service('settings')->get('RestFul.authSource')[$this->method]));
     }
 
     /**

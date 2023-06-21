@@ -17,7 +17,7 @@ class AccessToken extends Base implements AuthenticatorInterface
 
     public function __construct(UserModel $provider)
     {
-        $this->method = 'session';
+        $this->method = 'token';
         $this->provider = $provider;
         parent::__construct();
     }
