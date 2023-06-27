@@ -63,8 +63,6 @@ abstract class Base
             $authSource = service('settings')->get('RestFul.authSource')[$this->method];
         }
 
-        $authSource = service('settings')->get('RestFul.authSource')[$this->method];
-
         if ($authSource === 'library') {
             log_message('debug', "Performing Library authentication for $username");
 
