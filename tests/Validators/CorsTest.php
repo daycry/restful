@@ -70,7 +70,7 @@ final class CorsTest extends TestCase
         $result = $this->call('get', 'example');
 
         $result->assertHeaderMissing('Access-Control-Allow-Origin');
-        $result->assertHeader('Access-Control-Allow-Credentials');
+        $result->assertHeaderMissing('Access-Control-Allow-Credentials');
     }
 
     public function testCorsOptionsMethodError(): void

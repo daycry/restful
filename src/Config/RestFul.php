@@ -206,7 +206,7 @@ class RestFul extends BaseConfig
     * Set to TRUE to enable Cross-Origin Resource Sharing (CORS) from any
     * source domain
     */
-    public bool $allowAnyCorsDomain = true;
+    public bool $allowAnyCorsDomain = false;
 
     /**
     * --------------------------------------------------------------------------
@@ -261,7 +261,7 @@ class RestFul extends BaseConfig
     | http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
     |
     */
-    public array $forcedCorsHeaders = [ 'Access-Control-Allow-Credentials' => 'true' ];
+    public bool $supportsCredentials = false;
 
     /**
      * --------------------------------------------------------------------------

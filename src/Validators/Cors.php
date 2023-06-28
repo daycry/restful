@@ -40,12 +40,14 @@ class Cors
         $response->setHeader('Access-Control-Allow-Headers', $allowedCorsHeaders);
         $response->setHeader('Access-Control-Allow-Methods', $allowedCorsMethods);
 
-        $forcedheaders = service('settings')->get('RestFul.forcedCorsHeaders');
-        // If there are headers that should be forced in the CORS check, add them now
-        if (is_array($forcedheaders)) {
-            foreach ($forcedheaders as $header => $value) {
-                $response->setHeader($header, $value);
-            }
+        $response->setHeader('Access-Control-Expose-Headers', implode(', ', service('settings')->get('RestFul.exposedCorsHeaders')));
+
+        if (service('settings')->get('RestFul.corsMaxAge') !== null) {
+            $response = $response->setHeader('Access-Control-Max-Age', (string) service('settings')->get('RestFul.corsMaxAge'));
+        }
+
+        if (service('settings')->get('RestFul.supportsCredentials')) {
+            $response = $response->setHeader('Access-Control-Allow-Credentials', 'true');
         }
 
     }
