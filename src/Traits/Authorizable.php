@@ -19,7 +19,7 @@ trait Authorizable
         $scopes = ($this->scopes) ? $this->scopes : [];
 
         // Wildcard present
-        if (in_array('*', $this->scopes, true)) {
+        if (in_array('*', $scopes, true)) {
             return true;
         }
 
