@@ -180,7 +180,7 @@ class RestFul extends BaseConfig
      *
      * @var array
      */
-    public $allowedHeaders = ['*'];
+    public array $allowedHeaders = ['*'];
 
     /**
      * --------------------------------------------------------------------------
@@ -191,7 +191,7 @@ class RestFul extends BaseConfig
      *
      * @var array
      */
-    public $allowedMethods = ['*'];
+    public array $allowedMethods = ['*'];
 
     /**
      * --------------------------------------------------------------------------
@@ -203,7 +203,7 @@ class RestFul extends BaseConfig
      *
      * @var array
      */
-    public $allowedOrigins = ['*'];
+    public array $allowedOrigins = ['*'];
 
     /**
      * --------------------------------------------------------------------------
@@ -214,7 +214,7 @@ class RestFul extends BaseConfig
      *
      * @var array
      */
-    public $allowedOriginsPatterns = [];
+    public array $allowedOriginsPatterns = [];
 
     /**
      * --------------------------------------------------------------------------
@@ -225,7 +225,7 @@ class RestFul extends BaseConfig
      *
      * @var array
      */
-    public $exposedHeaders = [];
+    public array $exposedHeaders = [];
 
     /**
      * --------------------------------------------------------------------------
@@ -236,7 +236,7 @@ class RestFul extends BaseConfig
      *
      * @var int
      */
-    public $maxAge = 0;
+    public int $maxAge = 0;
 
     /**
      * --------------------------------------------------------------------------
@@ -253,7 +253,7 @@ class RestFul extends BaseConfig
      *
      * @var boolean
      */
-    public $supportsCredentials = false;
+    public bool $supportsCredentials = false;
 
     /**
     * --------------------------------------------------------------------------
