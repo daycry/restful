@@ -21,6 +21,16 @@
         "daycry/cronjob": "^2.0",
         "daycry/settings": "^1"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url" : "git@ssh.dev.azure.com:v3/ImaginaDEVOPS/MEDIAPRO%20-%20Equipo%20Desarrollo/AzureOauthServer"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/abraham/phpunit-testlistener-vcr"
+        }
+    ],
     "require-dev":
     {
         "codeigniter4/devkit": "^1",

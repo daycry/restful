@@ -172,108 +172,89 @@ class RestFul extends BaseConfig
     public bool $checkCors = false;
 
     /**
-    * --------------------------------------------------------------------------
-    * CORS Allowable Headers
-    * --------------------------------------------------------------------------
-    *
-    * If using CORS checks, set the allowable headers here
-    *
-    */
-    public array $allowedCorsHeaders = [
-        'Origin',
-        'X-Requested-With',
-        'Content-Type',
-        'Accept',
-        'Access-Control-Request-Method',
-        'X-API-KEY',
-        'Authorization'
-    ];
-
-    public array $allowedCorsMethods = [
-        'GET',
-        'POST',
-        'OPTIONS',
-        'PUT',
-        'PATCH',
-        'DELETE'
-    ];
-
-    /**
-    * --------------------------------------------------------------------------
-    * CORS Allow Any Domain
-    * --------------------------------------------------------------------------
-    *
-    * Set to TRUE to enable Cross-Origin Resource Sharing (CORS) from any
-    * source domain
-    */
-    public bool $allowAnyCorsDomain = false;
-
-    /**
-    * --------------------------------------------------------------------------
-    * CORS Allowable Domains
-    * --------------------------------------------------------------------------
-    *
-    * Used if $config['check_cors'] is set to TRUE and $config['allow_any_cors_domain']
-    * is set to FALSE. Set all the allowable domains within the array
-    *
-    * e.g. $allowedCorsOrigins = ['http://www.example.com', 'https://spa.example.com']
-    */
-    public array $allowedCorsOrigins = [];
+     * --------------------------------------------------------------------------
+     * Allowed HTTP headers
+     * --------------------------------------------------------------------------
+     *
+     * Indicates which HTTP headers are allowed.
+     *
+     * @var array
+     */
+    public $allowedHeaders = ['*'];
 
     /**
      * --------------------------------------------------------------------------
-     * CORS Allowed origins patterns
+     * Allowed HTTP methods
+     * --------------------------------------------------------------------------
+     *
+     * Indicates which HTTP methods are allowed.
+     *
+     * @var array
+     */
+    public $allowedMethods = ['*'];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Allowed request origins
+     * --------------------------------------------------------------------------
+     *
+     * Indicates which origins are allowed to perform requests.
+     * Patterns also accepted, for example *.foo.com
+     *
+     * @var array
+     */
+    public $allowedOrigins = ['*'];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Allowed origins patterns
      * --------------------------------------------------------------------------
      *
      * Patterns that can be used with `preg_match` to match the origin.
      *
      * @var array
      */
-    public array $allowedCorsOriginsPatterns = [];
+    public $allowedOriginsPatterns = [];
 
     /**
      * --------------------------------------------------------------------------
-     * CORS Exposed headers
+     * Exposed headers
      * --------------------------------------------------------------------------
      *
      * Headers that are allowed to be exposed to the web server.
      *
      * @var array
      */
-    public array $exposedCorsHeaders = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | CORS Forced Headers
-    |--------------------------------------------------------------------------
-    |
-    | If using CORS checks, always include the headers and values specified here
-    | in the OPTIONS client preflight.
-    | Example:
-    | $config['forcedCorsHeaders'] = [
-    |   'Access-Control-Allow-Credentials' => 'true'
-    | ];
-    |
-    | Added because of how Sencha Ext JS framework requires the header
-    | Access-Control-Allow-Credentials to be set to true to allow the use of
-    | credentials in the REST Proxy.
-    | See documentation here:
-    | http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
-    |
-    */
-    public bool $supportsCredentials = false;
+    public $exposedHeaders = [];
 
     /**
      * --------------------------------------------------------------------------
-     * CORS Max age
+     * Max age
      * --------------------------------------------------------------------------
      *
      * Indicates how long the results of a preflight request can be cached.
      *
      * @var int
      */
-    public int $corsMaxAge = 0;
+    public $maxAge = 0;
 
+    /**
+     * --------------------------------------------------------------------------
+     * Whether or not the response can be exposed when credentials are present
+     * --------------------------------------------------------------------------
+     *
+     * Indicates whether or not the response to the request can be exposed when the
+     * credentials flag is true. When used as part of a response to a preflight
+     * request, this indicates whether or not the actual request can be made
+     * using credentials.  Note that simple GET requests are not preflighted,
+     * and so if a request is made for a resource with credentials, if
+     * this header is not returned with the resource, the response
+     * is ignored by the browser and not returned to web content.
+     *
+     * @var boolean
+     */
+    public $supportsCredentials = false;
+    
     /**
     * --------------------------------------------------------------------------
     * Enable block Invalid Attempts

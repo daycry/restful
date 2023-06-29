@@ -13,6 +13,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use Daycry\RestFul\Libraries\Logger;
 use Daycry\RestFul\Libraries\Authentication;
 use Daycry\RestFul\Libraries\Passwords;
+use Daycry\RestFul\Libraries\Cors;
 
 class Services extends BaseService
 {
@@ -94,5 +95,16 @@ class Services extends BaseService
         }
 
         return new Passwords();
+    }
+
+    public static function cors(?RestFul $config = null, bool $getShared = true)
+    {
+        $config ??= config('RestFul');
+
+        if ($getShared) {
+            return static::getSharedInstance('cors', $config);
+        }
+
+        return new Cors($config);
     }
 }
