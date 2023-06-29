@@ -2,7 +2,7 @@
 
 namespace Daycry\RestFul\Validators;
 
-use Config\Services;
+use Daycry\RestFul\Config\Services;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Cors

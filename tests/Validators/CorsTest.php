@@ -32,7 +32,6 @@ final class CorsTest extends TestCase
         return new Request(Factories::config('App'));
     }
 
-    /** @var Response */
     protected function response()
     {
         return new Response(Factories::config('App'));
@@ -62,7 +61,7 @@ final class CorsTest extends TestCase
             ->withMethod('OPTIONS')
             ->setHeader('Access-Control-Request-Method', 'GET');
 
-            $cors = new Cors(config('RestFul'));
+        $cors = new Cors(config('RestFul'));
 
         $this->assertTrue($cors->isPreflightRequest($request));
     }
@@ -72,7 +71,7 @@ final class CorsTest extends TestCase
         $request = $this->request()->withMethod('GET')
             ->setHeader('Access-Control-Request-Method', 'GET');
 
-            $cors = new Cors(config('RestFul'));
+        $cors = new Cors(config('RestFul'));
 
         $this->assertFalse($cors->isPreflightRequest($request));
     }
@@ -82,13 +81,13 @@ final class CorsTest extends TestCase
         $response = $this->response()
             ->setHeader('Vary', 'Access-Control-Request-Method');
 
-            $cors = new Cors(config('RestFul'));
+        $cors = new Cors(config('RestFul'));
 
         $vary = $cors->varyHeader($response, 'Access-Control-Request-Method');
 
         $this->assertEquals($response->getHeaderLine('Vary'), $vary->getHeaderLine('Vary'));
     }
-    
+
     public function testHandlePreflightRequest()
     {
         $request = $this->request()
@@ -96,8 +95,8 @@ final class CorsTest extends TestCase
             ->setHeader('Origin', 'http://foobar.com')
             ->setHeader('Access-Control-Request-Method', 'GET')
             ->setHeader('Access-Control-Request-Headers', 'X-CSRF-TOKEN');
-            
-            $cors = new Cors(config('RestFul'));
+
+        $cors = new Cors(config('RestFul'));
 
         $expected = $cors->handlePreflightRequest($request);
 
@@ -123,7 +122,7 @@ final class CorsTest extends TestCase
         $response = $this->response()
             ->setHeader('Access-Control-Allow-Origin', $request->getHeaderLine('Origin'));
 
-            $cors = new Cors(config('RestFul'));
+        $cors = new Cors(config('RestFul'));
 
         $expected = $cors->addPreflightRequestHeaders($response, $request);
 
@@ -242,7 +241,7 @@ final class CorsTest extends TestCase
             ->setHeader('Origin', 'http://foo.com')
             ->setHeader('Access-Control-Request-Headers', 'X-CSRF-TOKEN');
 
-            $cors = new Cors(config('RestFul'));
+        $cors = new Cors(config('RestFul'));
 
         $expeted = $cors->addPreflightRequestHeaders($this->response(), $request);
 

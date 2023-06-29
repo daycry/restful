@@ -42,7 +42,7 @@ class Cors
     }
 
     /**
-     * @param array|CorsInputOptions $options
+     * @param RestFul $config
      */
     public function setOptions(RestFul $config): void
     {

@@ -10,14 +10,13 @@ use Daycry\RestFul\Config\Services;
 class CorsFilter implements FilterInterface
 {
     /**
-     * @var \Fluent\Cors\ServiceCors $cors
+     * @var \Daycry\RestFul\Libraries\Cors $cors
      */
     protected $cors;
 
     /**
      * Constructor.
      *
-     * @param array $options
      * @return void
      */
     public function __construct()

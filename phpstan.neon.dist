@@ -25,6 +25,8 @@ parameters:
 		- '#Call to deprecated method getMethod\(\) of class CodeIgniter\\HTTP\\Request:#'
 		- '#Call to deprecated method getStatusCode\(\) of class CodeIgniter\\HTTP\\ResponseInterface:#'
 		- '#Negated boolean expression is always true.#'
+		- '#class CodeIgniter\\HTTP\\Request constructor expects Config\\App#'
+		- '#class CodeIgniter\\HTTP\\Response constructor expects Config\\App#'
 	universalObjectCratesClasses:
 		- CodeIgniter\Entity
 		- CodeIgniter\Entity\Entity

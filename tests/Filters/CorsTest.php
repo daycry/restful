@@ -32,7 +32,7 @@ final class CorsTest extends FilterTestCase
 
         $request = service('request');
         $request->setHeader('Origin', 'https://test-cors1.local');
-        
+
         Services::injectMock('request', $request);
 
         $result = $this->call('get', 'example-filter');
@@ -48,13 +48,13 @@ final class CorsTest extends FilterTestCase
 
         $request = service('request');
         $request->setHeader('Origin', 'https://test-cors1.local');
-        
+
         Services::injectMock('request', $request);
 
         $result = $this->call('get', 'example-filter');
 
         $response = Services::response();
-        
+
         $this->assertNotEquals(
             'https://test-cors1.local',
             $response->getHeaderLine('Access-Control-Allow-Origin')
@@ -64,7 +64,7 @@ final class CorsTest extends FilterTestCase
         $result->assertHeaderMissing('Access-Control-Allow-Credentials');
     }
 
-    
+
 
     protected function tearDown(): void
     {

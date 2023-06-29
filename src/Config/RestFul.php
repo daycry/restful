@@ -254,7 +254,7 @@ class RestFul extends BaseConfig
      * @var boolean
      */
     public $supportsCredentials = false;
-    
+
     /**
     * --------------------------------------------------------------------------
     * Enable block Invalid Attempts
