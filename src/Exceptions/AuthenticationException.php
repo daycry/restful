@@ -8,6 +8,8 @@ use Daycry\RestFul\Exceptions\RuntimeException;
 
 class AuthenticationException extends RuntimeException
 {
+    public static $authorized = true;
+
     protected $code = 403;
 
     /**
@@ -30,16 +32,19 @@ class AuthenticationException extends RuntimeException
 
     public static function forInvalidCredentials(): self
     {
+        self::$authorized = false;
         return new self(lang('RestFul.invalidCredentials'));
     }
 
     public static function forNoPassword(): self
     {
+        self::$authorized = false;
         return new self(lang('RestFul.noPassword'));
     }
 
     public static function forInvalidAccessToken(): self
     {
+        self::$authorized = false;
         return new self(lang('RestFul.invalidAccessToken'));
     }
 
