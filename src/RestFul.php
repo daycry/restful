@@ -107,7 +107,6 @@ trait RestFul
      */
     public function __destruct()
     {
-        log_message('error', 'hhhhh');
         if ($this->request) {
             $this->_logRequest();
 
