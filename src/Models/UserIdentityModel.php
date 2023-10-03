@@ -120,9 +120,16 @@ class UserIdentityModel extends BaseModel
             return null;
         }
 
-        return $this->where('type', $type)
+        $identity = $this->where('type', $type)
             ->where('secret', $secret)
             ->first();
+
+        if($identity && strcmp($identity->secret,$secret) == 0)
+        {
+            return $identity;
+        }
+
+        return null;
     }
 
     /**
