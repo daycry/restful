@@ -1,7 +1,7 @@
 {
     "name": "daycry/restful",
     "description": "Rest Server for Codeigniter 4",
-    "homepage": "https://github.com/daycry/restfull",
+    "homepage": "https://github.com/daycry/restful",
     "authors":
     [
         {
@@ -19,7 +19,8 @@
         "daycry/jwt": "^1.0",
         "daycry/class-finder": "^2.0",
         "daycry/cronjob": "^2.0",
-        "daycry/settings": "^1"
+        "daycry/settings": "^1",
+        "daycry/exceptions": "*"
     },
     "require-dev":
     {
@@ -79,6 +80,9 @@
         ]
     },
     "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
         "allow-plugins": {
             "phpstan/extension-installer": true
         }

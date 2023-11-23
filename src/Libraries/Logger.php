@@ -10,8 +10,8 @@ use Config\Services;
 use Daycry\Encryption\Encryption;
 use Daycry\RestFul\Entities\Endpoint;
 use CodeIgniter\Debug\Timer;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 use Daycry\RestFul\Models\LogModel;
-use Daycry\RestFul\Interfaces\BaseException;
 
 class Logger
 {
@@ -85,7 +85,7 @@ class Logger
             //If authenticator not exists
             try {
                 $userId = auth()->id();
-            } catch(BaseException $ex) {
+            } catch(BaseExceptionInterface $ex) {
                 $userId = null;
             }
 

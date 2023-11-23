@@ -2,7 +2,7 @@
 
 namespace Daycry\RestFul\Exceptions;
 
-use Daycry\RestFul\Exceptions\RuntimeException;
+use Daycry\Exceptions\Exceptions\RuntimeException;
 
 class FailTooManyRequestsException extends RuntimeException
 {

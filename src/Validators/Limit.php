@@ -7,7 +7,7 @@ use Config\Services;
 use Daycry\RestFul\Models\LimitModel;
 use CodeIgniter\I18n\Time;
 use Daycry\RestFul\Exceptions\FailTooManyRequestsException;
-use Daycry\RestFul\Interfaces\BaseException;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 
 class Limit
 {

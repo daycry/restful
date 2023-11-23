@@ -8,7 +8,6 @@ use Daycry\RestFul\Interfaces\AuthenticatorInterface;
 use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Models\UserModel;
 use Daycry\RestFul\Models\UserIdentityModel;
-use CodeIgniter\Config\Services;
 use Daycry\RestFul\Entities\User;
 
 class AccessToken extends Base implements AuthenticatorInterface

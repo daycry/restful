@@ -7,7 +7,7 @@ namespace Daycry\RestFul\Traits;
 use Daycry\RestFul\Entities\Endpoint;
 use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Validators\AccessToken;
-use Daycry\RestFul\Interfaces\BaseException;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 
 trait Authenticable
 {
@@ -34,7 +34,7 @@ trait Authenticable
                 }
             }
 
-        } catch(BaseException $ex) {
+        } catch(BaseExceptionInterface $ex) {
             if($strictApiAndAuth || !$alias) {
                 throw $ex;
             }
@@ -46,7 +46,7 @@ trait Authenticable
                 $authenticator->authenticate();
             }
 
-        } catch(BaseException $ex) {
+        } catch(BaseExceptionInterface $ex) {
             if($strictApiAndAuth || (!$strictApiAndAuth && !$user)) {
                 throw $ex;
             }

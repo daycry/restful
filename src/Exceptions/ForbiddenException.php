@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Daycry\RestFul\Exceptions;
 
-use Daycry\RestFul\Exceptions\RuntimeException;
+use Daycry\Exceptions\Exceptions\RuntimeException;
 use Config\Services;
 
 class ForbiddenException extends RuntimeException

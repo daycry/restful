@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Daycry\RestFul\Exceptions;
 
-use Daycry\RestFul\Interfaces\BaseException;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 
-class LogicException extends \LogicException implements BaseException
+class LogicException extends \LogicException implements BaseExceptionInterface
 {
 }

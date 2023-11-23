@@ -15,10 +15,10 @@ use Daycry\RestFul\Validators\Blacklist;
 use Daycry\RestFul\Validators\Whitelist;
 use Daycry\RestFul\Validators\Limit;
 use Daycry\RestFul\Libraries\Logger;
-use Daycry\RestFul\Interfaces\BaseException;
 use Daycry\RestFul\Exceptions\ForbiddenException;
 use Daycry\RestFul\Models\AttemptModel;
 use Config\Mimes;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 use ReflectionProperty;
 use stdClass;
 
@@ -152,7 +152,7 @@ trait RestFul
      * @param string $method
      * @param array  $params     The params passed to the controller method
      *
-     * @throws BaseException
+     * @throws BaseExceptionInterface
      */
     public function _remap($method, ...$params)
     {
@@ -199,7 +199,7 @@ trait RestFul
 
             return call_user_func_array([ $this, $method ], $params);
 
-        } catch (BaseException $ex) {
+        } catch (BaseExceptionInterface $ex) {
 
             if(property_exists($ex, 'authorized')) {
                 $this->_isRequestAuthorized = (new ReflectionProperty($ex, 'authorized'))->getValue();

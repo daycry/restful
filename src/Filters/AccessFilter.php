@@ -8,8 +8,8 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Config\Services;
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 use Daycry\RestFul\Exceptions\AuthorizationException;
-use Daycry\RestFul\Interfaces\BaseException;
 use Daycry\RestFul\Traits\Authenticable;
 
 /**
@@ -48,7 +48,7 @@ class AccessFilter implements FilterInterface
                     throw AuthorizationException::forNotEnoughPrivilege();
                 }
 
-            } catch(BaseException $ex) {
+            } catch(BaseExceptionInterface $ex) {
 
                 $logger->setAuthorized(false)
                     ->setResponseCode($ex->getCode())

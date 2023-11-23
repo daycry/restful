@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Daycry\RestFul;
 
+use Daycry\Exceptions\Interfaces\BaseExceptionInterface;
 use Daycry\RestFul\Libraries\Authentication;
 use Daycry\RestFul\Exceptions\AuthenticationException;
 use Daycry\RestFul\Interfaces\AuthenticatorInterface;
 use Daycry\RestFul\Entities\User;
 use Daycry\RestFul\Models\UserModel;
-use Daycry\RestFul\Interfaces\BaseException;
 
 /**
  * @method Result    attempt(array $credentials)
@@ -144,7 +144,7 @@ class Auth
             if ($authenticate && method_exists($authenticate, $method)) {
                 return $authenticate->{$method}(...$args);
             }
-        } catch(BaseException $ex) {
+        } catch(BaseExceptionInterface $ex) {
             return false;
         }
     }
