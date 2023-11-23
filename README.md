@@ -4,7 +4,7 @@
 
 Restful server for Codeigniter 4
 
-[![Build Status](https://github.com/daycry/restful/workflows/PHP%20Tests/badge.svg)](https://github.com/daycry/restful/actions?query=workflow%3A%22PHP+Tests%22)
+[![Build Status](https://github.com/daycry/restful/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/daycry/restful/actions/workflows/php.yml)
 [![Coverage Status](https://coveralls.io/repos/github/daycry/restful/badge.svg?branch=master)](https://coveralls.io/github/daycry/restful?branch=master)
 [![Downloads](https://poser.pugx.org/daycry/restful/downloads)](https://packagist.org/packages/daycry/restful)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/daycry/restful)](https://packagist.org/packages/daycry/restful)
